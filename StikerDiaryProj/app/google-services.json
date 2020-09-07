@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "772219846527",
+    "firebase_url": "https://stickerdiary-c957e.firebaseio.com",
+    "project_id": "stickerdiary-c957e",
+    "storage_bucket": "stickerdiary-c957e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772219846527:android:b05ab1b3639d8479b8644a",
+        "android_client_info": {
+          "package_name": "com.example.stickerdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772219846527-o9q050lartauh5u1sgq48c0t59tjea5v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB37xTuJht5LjjE-GXfGPYoCw9AknZOAPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772219846527-o9q050lartauh5u1sgq48c0t59tjea5v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
