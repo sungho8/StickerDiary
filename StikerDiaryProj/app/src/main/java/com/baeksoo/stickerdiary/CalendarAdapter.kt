@@ -1,4 +1,4 @@
-package com.example.stickerdiary
+package com.baeksoo.stickerdiary
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.example.stickerdiary
+package com.baeksoo.stickerdiary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.stickerdiary
+package com.baeksoo.stickerdiary
 
 import org.junit.Test
 

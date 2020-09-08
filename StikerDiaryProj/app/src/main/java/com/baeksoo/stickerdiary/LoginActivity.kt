@@ -1,9 +1,8 @@
-package com.example.stickerdiary
+package com.baeksoo.stickerdiary
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,16 +20,14 @@ class LoginActivity  : AppCompatActivity(){
     //google client
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    //private const val TAG = "GoogleActivity"
     private val RC_SIGN_IN = 99
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //btn_googleSignIn.setOnClickListener (this) // 구글 로그인 버튼
         btn_googleSignIn.setOnClickListener {signIn()}
-        btn_guestSignIn.setOnClickListener{}
+        btn_guestSignIn.setOnClickListener{guestSignIn()}
 
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -86,7 +83,6 @@ class LoginActivity  : AppCompatActivity(){
                     toMainActivity(firebaseAuth?.currentUser)
                 } else {
                     Log.w("LoginActivity", "firebaseAuthWithGoogle 실패", task.exception)
-                    //Snackbar.make(login_layout, "로그인에 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
                 }
             }
     }// firebaseAuthWithGoogle END
@@ -112,10 +108,6 @@ class LoginActivity  : AppCompatActivity(){
     }
     // signIn End
 
-    fun onClick(p0: View?) {
-    }
-
-
     private fun signOut() { // 로그아웃
         // Firebase sign out
         firebaseAuth.signOut()
@@ -130,7 +122,6 @@ class LoginActivity  : AppCompatActivity(){
         // Firebase sign out
         firebaseAuth.signOut()
         googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-
         }
     }
 }
