@@ -7,14 +7,15 @@ import kotlin.collections.ArrayList
 class DateCalculator{
 
     //data 생성
-    fun setData(): ArrayList<Data> {
+    fun setData(_year : Int, _month : Int): ArrayList<Data> {
         val list = arrayListOf<Data>()
 
         val instance = Calendar.getInstance()
         val cells : ArrayList<Date> = ArrayList()
         val calendar : Calendar = instance.clone() as Calendar
-        calendar.set(Calendar.YEAR, 2019)
-        calendar.set(Calendar.MONTH, 1)
+
+        calendar.set(Calendar.YEAR, _year)
+        calendar.set(Calendar.MONTH, _month)
 
         //마지막날짜가 몇째주인지 구하기
         val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
