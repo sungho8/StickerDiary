@@ -1,81 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/calendarView"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.baeksoo.stickerdiary.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="#C7B5FF">
+        <TextView
+            android:text="◀"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="년도 날짜"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+        <TextView
+            android:text="▶"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutDay"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:paddingVertical="25dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="일"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:gravity="center"
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="SUN"
+            android:textSize="15dp"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="월"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:gravity="center"
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="MON"
+            android:textSize="15dp"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="화"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:gravity="center"
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="TUE"
+            android:textSize="15dp"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="수"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="WED"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="목"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="THU"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="금"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="FRI"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:padding="10dp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="토"
-            android:textSize="20dp"
-            android:paddingHorizontal="20dp"/>
+            android:textColor="#C7B5FF"
+            android:textStyle="bold"
+            android:text="SAT"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:padding="10dp"/>
     </LinearLayout>
-    
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayoutDay"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="7">
-    </androidx.recyclerview.widget.RecyclerView>
-
-
-</RelativeLayout>
+        android:layout_height="match_parent"/>
+</LinearLayout>
