@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
@@ -34,12 +35,22 @@ class TestActivity : AppCompatActivity() {
         currentView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month))
         nextView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month+1))
 
+        //구분선
+        val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
+        dividerItemDecoration.setDrawable(getDrawable(R.drawable.divider));
+        currentView.recyclerView.addItemDecoration(dividerItemDecoration)
+
+        val dividerItemDecoration2 = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.HORIZONTAL)
+        dividerItemDecoration2.setDrawable(getDrawable(R.drawable.divider));
+        currentView.recyclerView.addItemDecoration(dividerItemDecoration2)
+
 
         view_list.add(preView)
         view_list.add(currentView)
         view_list.add(nextView)
 
         pager.adapter = CustomAdapter()
+
         pager.setCurrentItem(1)
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
