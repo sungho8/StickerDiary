@@ -5,26 +5,26 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_test.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.absoluteValue
 
 class TestActivity : AppCompatActivity() {
     private val dateCalculator = DateCalculator()
+
+    // 페이지에 사용되는 뷰, 텍스트
     private var view_list = ArrayList<View>()
     private var month_list = ArrayList<String>()
-    private val instance = Calendar.getInstance()
-    private var year = instance.get(Calendar.YEAR).toInt()
-    private var month = instance.get(Calendar.MONTH).toInt()
 
+    // 현재 날짜
+    private val instance = Calendar.getInstance()
+    private var year = instance.get(Calendar.YEAR)
+    private var month = instance.get(Calendar.MONTH)
+
+    // 페이지가 보여주는 날짜
     private var pageYear = year;
     private var pageMonth = month;
 
@@ -71,7 +71,6 @@ class TestActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
 
             }
-
         })
     }
 
