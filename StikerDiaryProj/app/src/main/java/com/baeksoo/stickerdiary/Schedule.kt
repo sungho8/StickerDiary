@@ -9,5 +9,3 @@ class Schedule(var Check : Boolean, var StartDay:String,var EndDay:String,
         Log.e("MainActivity", StartDay + " ~ " + EndDay)
     }
 }
-
-

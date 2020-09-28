@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/calendarView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,9 +10,9 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linearLayoutDay"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:paddingVertical="25dp">
 
@@ -70,12 +70,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayoutDay"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="7">
     </androidx.recyclerview.widget.RecyclerView>
 
 
-</LinearLayout>
+</RelativeLayout>

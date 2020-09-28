@@ -3,6 +3,9 @@ package com.baeksoo.stickerdiary
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -15,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val dateCalculator = DateCalculator()
 
+
+        val dateCalculator = DateCalculator()
         recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month))
+
     }
 }
