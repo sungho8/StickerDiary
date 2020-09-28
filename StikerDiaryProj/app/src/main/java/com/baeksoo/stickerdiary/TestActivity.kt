@@ -2,6 +2,7 @@ package com.baeksoo.stickerdiary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -14,33 +15,42 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.activity_test.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.absoluteValue
 
 class TestActivity : AppCompatActivity() {
     private val dateCalculator = DateCalculator()
     private var view_list = ArrayList<View>()
-    private val instance = Calendar.getInstance();
+    private var month_list = ArrayList<String>()
+    private val instance = Calendar.getInstance()
     private var year = instance.get(Calendar.YEAR).toInt()
     private var month = instance.get(Calendar.MONTH).toInt()
+
+    private var pageYear = year;
+    private var pageMonth = month;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
-        val preView = layoutInflater.inflate(R.layout.activity_main,null)
-        val currentView  = layoutInflater.inflate(R.layout.activity_main,null)
-        val nextView = layoutInflater.inflate(R.layout.activity_main,null)
+        var count = 10 * 12 // 10년치
+        for(i in -1 * count .. count){
+            val currentView  = layoutInflater.inflate(R.layout.activity_main,null)
 
-        preView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month-1))
-        currentView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month))
-        nextView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(year,month+1))
+            // 년도, 월 계산
+            var y = year + ((i + month) / 12)
+            var m = (i + month) % 12
+            if(i + month < 0){
+                y = year - 1 + (i + month + 1) / 12
+                m = (12 + (i + month) % 12) % 12
+            }
 
-
-        view_list.add(preView)
-        view_list.add(currentView)
-        view_list.add(nextView)
+            currentView.recyclerView.adapter = CalendarAdapter(dateCalculator.setData(y, m))
+            month_list.add("${y} 년 ${m + 1} 월")     // 상단 텍스트뷰
+            view_list.add(currentView)                // 하단 리사이클러뷰
+        }
 
         pager.adapter = CustomAdapter()
-        pager.setCurrentItem(1)
+        pager.setCurrentItem(view_list.count() / 2)     // 시작 위치를 현재로
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             // 스크롤 상태가 변경되었을 때
@@ -48,7 +58,13 @@ class TestActivity : AppCompatActivity() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                tv1.text = "${year} 년 ${month + position} 월"
+                var currentPage = position - view_list.count() / 2
+
+                pageMonth = (month + currentPage) % 12
+                pageYear = year + (month + currentPage) /12
+
+                Log.e("현재 페이지 : ",currentPage.toString() );
+                tv1.text = month_list[position]
             }
 
             // 클릭했을 때
