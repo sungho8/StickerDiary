@@ -26,7 +26,7 @@ class CalendarCalculator{
         calendar.add(Calendar.DAY_OF_MONTH, - firstDay)
 
         //날짜 채우기
-        while (cells.size < 7 * 6){  //최대 6주까지이므로
+        while (cells.size < 7 * 6){
             cells.add(calendar.time)
             list.add(Data(calendar.get(Calendar.DAY_OF_MONTH).toString()))
             calendar.add(Calendar.DAY_OF_MONTH,1) //저번달부터 +1하면서 add

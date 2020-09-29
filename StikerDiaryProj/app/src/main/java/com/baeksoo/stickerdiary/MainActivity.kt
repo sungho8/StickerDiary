@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
@@ -42,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 y = year - 1 + (i + month + 1) / 12
                 m = (12 + (i + month) % 12) % 12
             }
+
             currentView.recyclerView.adapter = CalendarAdapter(this,dateCalculator.setData(y, m))
 
             //구분선
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             month_list.add("${y} 년 ${m + 1} 월")     // 상단 텍스트뷰
             view_list.add(currentView)                // 하단 리사이클러뷰
 
+
         }
 
         pager.adapter = CustomAdapter()
@@ -65,12 +66,12 @@ class MainActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
+
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 var currentPage = position - view_list.count() / 2
 
                 pageMonth = (month + currentPage) % 12
                 pageYear = year + (month + currentPage) /12
-
                 tv1.text = month_list[position]
             }
 

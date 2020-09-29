@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : RecyclerView.Adapter<CalendarViewHolder>(){
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CalendarViewHolder {
+        //팩토리함수를 이용한 뷰홀더 생성.
         return CalendarViewHolder.newInstance(viewGroup)
     }
 
@@ -18,12 +19,13 @@ class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : Recycl
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
+
         // 홀더에 정의된 함수로 뷰 그리기
         holder.onBindView(position, list)
 
         //간격 설정
         val layoutParams = holder.itemView.layoutParams
-        layoutParams.height = 350
+        layoutParams.height = 250
         holder.itemView.requestLayout()
 
         //일요일 빨갛게 빨갛게 물들었네
