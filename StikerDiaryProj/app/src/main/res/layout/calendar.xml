@@ -1,23 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/calendarView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/linearLayoutDay"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:paddingVertical="25dp">
 
         <TextView
-            android:id="@+id/tvDay"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="10dp"
-            android:text="day"/>
-    </RelativeLayout>
+            android:layout_weight="1"
+            android:text="일"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="월"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="화"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="수"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="목"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="금"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="토"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"/>
+    </LinearLayout>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayoutDay"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="7">
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </RelativeLayout>
