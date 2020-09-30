@@ -2,9 +2,12 @@ package com.baeksoo.stickerdiary
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 //생성자에서 리스트 받아옴
 class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : RecyclerView.Adapter<CalendarViewHolder>(){
@@ -31,13 +34,23 @@ class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : Recycl
         //일요일 빨갛게 빨갛게 물들었네
         if(position%7 == 0) holder.day.setTextColor(Color.parseColor("#ff1200"))
 
-        //아이템 클릭
+        if(position <= 6 && holder.day.text.toString() > "1"){
+                Log.i("1일보다 전",holder.day.text.toString())
+                holder.day.alpha = 0.3f
+        }else if(position >= 28 && holder.day.text.toString() < "31"){
+            Log.i("31일보다 후",holder.day.text.toString())
+            holder.day.alpha = 0.3f
+        }else{
+            holder.day.alpha = 1f
+        }
+
+
+//        //아이템 클릭
 //        holder.itemView.setOnClickListener {
 //            Log.i("클릭","클릭"+ holder.day.text.toString())
 //
 //        }
 
     }
-
 
 }
