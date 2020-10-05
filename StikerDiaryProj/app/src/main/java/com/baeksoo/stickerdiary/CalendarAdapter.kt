@@ -35,23 +35,22 @@ class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : Recycl
         layoutParams.height = 250
         holder.itemView.requestLayout()
 
-        //일요일 빨갛게 빨갛게 물들었네
-        if(position%7 == 0) holder.day.setTextColor(Color.parseColor("#ff1200"))
-
-        if(position <= 6 && holder.day.text.toString() > "1"){
+        if(position <= 6 &&  Integer.parseInt(holder.day.text.toString()) > 20){
                 Log.i("1일보다 전",holder.day.text.toString())
                 holder.day.alpha = 0.3f
-        }else if(position >= 28 && holder.day.text.toString() < "31"){
+        }else if(position >= 28 && Integer.parseInt(holder.day.text.toString()) < 15){
             Log.i("31일보다 후",holder.day.text.toString())
             holder.day.alpha = 0.3f
         }else{
             holder.day.alpha = 1f
         }
 
+        //일요일 빨갛게 빨갛게 물들었네
+        if(position%7 == 0) holder.day.setTextColor(Color.parseColor("#ff1200"))
+
         //아이템 클릭
         holder.itemView.setOnClickListener {
             Log.i("클릭","클릭"+ holder.day.text.toString())
-
             val builder = AlertDialog.Builder(context)
             val popupView = LayoutInflater.from(context).inflate(R.layout.popup_schedule,null)
                 //layoutInflater.inflate(R.layout.popup_schedule,null)
@@ -60,7 +59,6 @@ class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : Recycl
             val btnEdit = popupView.findViewById<Button>(R.id.btnEdit)
 
             builder.setView(popupView).show()
-
         }
 
     }
