@@ -1,9 +1,11 @@
 package com.baeksoo.stickerdiary
 
+import android.app.AlertDialog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,18 +15,13 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
     // 뷰 홀더를 상속 받고나면 생성자에서 상위 홀더에 view 를 전달.
     val day : TextView
 
-    //초기화
+        //초기화
     init {
         this.day = calendarView.findViewById(R.id.tvDay)
 
-        calendarView.setOnClickListener {
-            val pos = adapterPosition
-            if (pos != RecyclerView.NO_POSITION) {
-                // click event
-                Log.i("클릭",day.text.toString()+"클릭")
-            }
+
         }
-    }
+
 
     /**팩토리 함수 */
     companion object {

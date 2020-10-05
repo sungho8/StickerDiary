@@ -2,6 +2,7 @@ package com.baeksoo.stickerdiary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter = CalendarAdapter(this,dateCalculator.setData(y, m))
+            currentView.recyclerView.adapter = CalendarAdapter(this, dateCalculator.setData(y, m))
 
             //구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
