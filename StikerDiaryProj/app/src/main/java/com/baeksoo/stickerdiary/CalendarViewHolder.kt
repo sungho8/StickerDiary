@@ -18,8 +18,6 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
         //초기화
     init {
         this.day = calendarView.findViewById(R.id.tvDay)
-
-
         }
 
 

@@ -1,14 +1,11 @@
-package com.baeksoo.stickerdiary
+package com.baeksoo.stickerdiary.Adapter
 
-import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.baeksoo.stickerdiary.*
 import kotlin.collections.ArrayList
 
 // 생성자에서 리스트 받아옴
@@ -16,7 +13,9 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CalendarViewHolder {
         // 팩토리함수를 이용한 뷰홀더 생성.
-        return CalendarViewHolder.newInstance(viewGroup)
+        return CalendarViewHolder.newInstance(
+            viewGroup
+        )
     }
 
     override fun getItemCount(): Int {
@@ -45,12 +44,16 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         }
 
         // 일요일 빨갛게
-        if(position%7 == 0) holder.day.setTextColor(Color.parseColor("#ff1200"))
+        if(position % 7 == 0) holder.day.setTextColor(Color.parseColor("#ff1200"))
 
         // 아이템 클릭 리스너
         holder.itemView.setOnClickListener {
+            val item = Array(20,{ i -> "$i + list" })
+            val sadapter = ScheduleListAdapter(context, R.layout.clist_item,item)
+
             val dialog = CustomDialog.CustomDialogBuilder()
-                .setTitle(holder.day.text.toString()).create()
+                .setTitle(holder.day.text.toString() + "dddddddddddddddddddddddddddd")
+                .setScheduleList(sadapter).create()
 
             dialog.show(mainActivity.supportFragmentManager,dialog.tag)
 

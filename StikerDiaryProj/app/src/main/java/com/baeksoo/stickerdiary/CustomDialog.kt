@@ -10,9 +10,12 @@ import android.view.Window
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.baeksoo.stickerdiary.Adapter.ScheduleListAdapter
+import kotlinx.android.synthetic.main.dialog_schedule.*
 
 class CustomDialog : DialogFragment(){
     var title: String? = null
+    var adapter : ScheduleListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +32,8 @@ class CustomDialog : DialogFragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.apply {
-            findViewById<TextView>(R.id.tvTitle)?.text = title
-            //findViewById<ListView>(R.id.list)?
+            findViewById<TextView>(R.id.tvDay)?.text = title
+            findViewById<ListView>(R.id.list)?.adapter = adapter
 
 //            findViewById<Button>(R.id.btn_negative)?.setOnClickListener {
 //                dismiss()
@@ -47,10 +50,10 @@ class CustomDialog : DialogFragment(){
             dialog.title = title
             return this
         }
-//        fun setDescription(description: String): CustomDialogBuilder {
-//            dialog.description = description
-//            return this
-//        }
+        fun setScheduleList(sadapter: ScheduleListAdapter): CustomDialogBuilder {
+            dialog.adapter = sadapter
+            return this
+        }
 //
 //        fun setPositiveBtnText(text: String): CustomDialogBuilder {
 //            dialog.positiveBtnText = text
