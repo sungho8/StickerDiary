@@ -50,17 +50,18 @@ class CalendarAdapter(val context : Context, val list: ArrayList<Data>) : Recycl
 
         //아이템 클릭
         holder.itemView.setOnClickListener {
-            Log.i("클릭","클릭"+ holder.day.text.toString())
+
+            //다이얼로그
             val builder = AlertDialog.Builder(context)
             val popupView = LayoutInflater.from(context).inflate(R.layout.popup_schedule,null)
-                //layoutInflater.inflate(R.layout.popup_schedule,null)
-
             val tvTitle = popupView.findViewById<TextView>(R.id.tvTitle)
             val btnEdit = popupView.findViewById<Button>(R.id.btnEdit)
-
             builder.setView(popupView).show()
+
         }
 
     }
+
+
 
 }
