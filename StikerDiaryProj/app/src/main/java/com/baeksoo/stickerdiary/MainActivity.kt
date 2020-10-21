@@ -42,15 +42,13 @@ class MainActivity : AppCompatActivity() {
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
-
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 var currentPage = position - view_list.count() / 2
 
                 pageMonth = (month + currentPage) % 12
                 pageYear = year + (month + currentPage) /12
-                tv1.text = month_list[position]
+                monthtxt.text = month_list[position]
             }
-
             override fun onPageSelected(position: Int) {
             }
         })
@@ -61,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         next.setOnClickListener(View.OnClickListener {
             pager.setCurrentItem(++pager.currentItem,true);
         })
+
+//        val schedule = Schedule("20201021","20201021","2100","2200","운동하기","sticker1","")
+//        schedule.UploadSchedule("sungho0830")
     }
 
     fun makeCalendar(count : Int){
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                     dateCalculator.setData(y, m)
                 )
 
-            //구분선
+            // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
             val dividerItemDecoration2 = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.HORIZONTAL)
             dividerItemDecoration.setDrawable(getDrawable(R.drawable.divider))

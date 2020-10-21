@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.collections.ArrayList
 
 // 생성자에서 리스트 받아옴
@@ -48,17 +49,15 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
         // 아이템 클릭 리스너
         holder.itemView.setOnClickListener {
-            val item = Array(20,{ i -> "$i + list" })
+            val item = Array(10,{ i -> "$i + list" })
             val sadapter = ScheduleListAdapter(context, R.layout.clist_item,item)
 
             val dialog = CustomDialog.CustomDialogBuilder()
-                .setTitle(holder.day.text.toString() + "dddddddddddddddddddddddddddd")
+                .setTitle(mainActivity.monthtxt.text.toString().substring(6) +" "+ holder.day.text.toString()+" 일")
                 .setScheduleList(sadapter).create()
 
             dialog.show(mainActivity.supportFragmentManager,dialog.tag)
-
         }
-
     }
 
 }
