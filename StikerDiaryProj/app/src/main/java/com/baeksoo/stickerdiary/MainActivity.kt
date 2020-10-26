@@ -28,13 +28,17 @@ class MainActivity : AppCompatActivity() {
     private var pageYear = year;
     private var pageMonth = month;
 
+    private var scheduleList = ArrayList<Schedule>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
-        makeCalendar(10*12);    // year * 12 10년치 달력 생성
+        val firebaseController = FirebaseController("sungho0830");
+        scheduleList = firebaseController.ReadAllSchedule()
+
+        makeCalendar(10 * 12);    // year * 12 10년치 달력 생성
 
         pager.adapter = CustomPagerAdapter()
         pager.setCurrentItem(view_list.count() / 2)     // 시작 위치를 현재로
@@ -42,15 +46,13 @@ class MainActivity : AppCompatActivity() {
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
-
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 var currentPage = position - view_list.count() / 2
 
                 pageMonth = (month + currentPage) % 12
                 pageYear = year + (month + currentPage) /12
-                tv1.text = month_list[position]
+                monthtxt.text = month_list[position]
             }
-
             override fun onPageSelected(position: Int) {
             }
         })
@@ -75,14 +77,9 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter =
-                CalendarAdapter(
-                    this,
-                    this,
-                    dateCalculator.setData(y, m)
-                )
+            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m))
 
-            //구분선
+            // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
             val dividerItemDecoration2 = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.HORIZONTAL)
             dividerItemDecoration.setDrawable(getDrawable(R.drawable.divider))

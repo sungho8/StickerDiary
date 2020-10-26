@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.collections.ArrayList
 
 // 생성자에서 리스트 받아옴
@@ -34,10 +35,8 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
         // 현재 달이 아닌 날짜는 흐리게 표시
         if(position <= 6 &&  Integer.parseInt(holder.day.text.toString()) > 20){
-                Log.i("1일보다 전",holder.day.text.toString())
                 holder.day.alpha = 0.3f
         }else if(position >= 28 && Integer.parseInt(holder.day.text.toString()) < 15){
-            Log.i("31일보다 후",holder.day.text.toString())
             holder.day.alpha = 0.3f
         }else{
             holder.day.alpha = 1f
@@ -49,19 +48,14 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         // 아이템 클릭 리스너
         holder.itemView.setOnClickListener {
 
-            val item = Array(20,{ i -> "$i + list" })
+            val item = Array(10,{ i -> "$i + list" })
             val sadapter = ScheduleListAdapter(context, R.layout.clist_item,item)
 
             val dialog = CustomDialog.CustomDialogBuilder()
-                .setTitle(holder.day.text.toString())
+                .setTitle(mainActivity.monthtxt.text.toString().substring(6) +" "+ holder.day.text.toString()+" 일")
                 .setScheduleList(sadapter).create()
 
             dialog.show(mainActivity.supportFragmentManager,dialog.tag)
-
         }
-
     }
-
-
-
 }

@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/citem"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
-        android:id="@+id/ctxt"
+    android:orientation="horizontal"
+    android:paddingVertical="15dp">
+    <LinearLayout
+        android:layout_weight="4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/cbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ctitletxt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text="TextView" />
+        <TextView
+            android:id="@+id/ctimetxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="#ACACAC"
+            android:text="시작날짜 ~ 끝나는날짜"/>
+    </LinearLayout>
 </LinearLayout>

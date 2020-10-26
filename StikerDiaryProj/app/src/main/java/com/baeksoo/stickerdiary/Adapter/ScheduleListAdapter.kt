@@ -1,12 +1,11 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import com.baeksoo.stickerdiary.R
 
 class ScheduleListAdapter(context: Context, resource: Int, item: Array<String>) : ArrayAdapter<String>(context,resource,item){
@@ -21,21 +20,30 @@ class ScheduleListAdapter(context: Context, resource: Int, item: Array<String>) 
         if (view == null){
             viewHolder = ViewHolder()
             view = LayoutInflater.from(mContext).inflate(mResource,parent,false)
-            viewHolder.button = view.findViewById(R.id.cbutton)
-            viewHolder.textView = view.findViewById(R.id.ctxt)
+            viewHolder.item = view.findViewById(R.id.citem)
+            viewHolder.titleTxt = view.findViewById(R.id.ctitletxt)
+            viewHolder.timeTxt = view.findViewById(R.id.ctimetxt)
             view.tag = viewHolder
-            viewHolder.textView.text = mItem[position]
+
+            viewHolder.titleTxt.text = mItem[position]
+
+            // 리스트 클릭 리스너
+            viewHolder.item.setOnClickListener {
+                // 수정페이지로 넘어가면됨
+                Log.d("dd" , viewHolder.titleTxt.text.toString())
+            }
+
             return view
         }else{
             viewHolder = view.tag as ViewHolder
         }
-        viewHolder.textView.text = mItem[position]
         return  view
     }
 
     //리스트뷰의 성능을 높히기 위해 사용
     inner class ViewHolder{
-        lateinit var textView : TextView
-        lateinit var button : Button
+        lateinit var item : LinearLayout
+        lateinit var titleTxt : TextView
+        lateinit var timeTxt : TextView
     }
 }
