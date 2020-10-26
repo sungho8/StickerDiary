@@ -2,13 +2,14 @@ package com.baeksoo.stickerdiary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.baeksoo.stickerdiary.Adapter.CalendarAdapter
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -31,7 +32,38 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var count = 10 * 12 // 10년치
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
+
+        makeCalendar(10*12);    // year * 12 10년치 달력 생성
+
+        pager.adapter = CustomPagerAdapter()
+        pager.setCurrentItem(view_list.count() / 2)     // 시작 위치를 현재로
+
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                var currentPage = position - view_list.count() / 2
+
+                pageMonth = (month + currentPage) % 12
+                pageYear = year + (month + currentPage) /12
+                tv1.text = month_list[position]
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+        })
+
+        pre.setOnClickListener(View.OnClickListener {
+            pager.setCurrentItem(--pager.currentItem,true);
+        })
+        next.setOnClickListener(View.OnClickListener {
+            pager.setCurrentItem(++pager.currentItem,true);
+        })
+    }
+
+    fun makeCalendar(count : Int){
         for(i in -1 * count .. count){
             val currentView  = layoutInflater.inflate(R.layout.calendar,null)
 
@@ -43,7 +75,12 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter = CalendarAdapter(this, dateCalculator.setData(y, m))
+            currentView.recyclerView.adapter =
+                CalendarAdapter(
+                    this,
+                    this,
+                    dateCalculator.setData(y, m)
+                )
 
             //구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
@@ -55,34 +92,10 @@ class MainActivity : AppCompatActivity() {
 
             month_list.add("${y} 년 ${m + 1} 월")     // 상단 텍스트뷰
             view_list.add(currentView)                // 하단 리사이클러뷰
-
-
         }
-
-        pager.adapter = CustomAdapter()
-
-        pager.setCurrentItem(view_list.count() / 2)     // 시작 위치를 현재로
-
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                var currentPage = position - view_list.count() / 2
-
-                pageMonth = (month + currentPage) % 12
-                pageYear = year + (month + currentPage) /12
-                tv1.text = month_list[position]
-            }
-
-            override fun onPageSelected(position: Int) {
-
-            }
-        })
     }
 
-    inner class CustomAdapter : PagerAdapter() {
+    inner class CustomPagerAdapter : PagerAdapter() {
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
             return view == `object`
         }
@@ -101,5 +114,4 @@ class MainActivity : AppCompatActivity() {
             pager.removeView(`object` as View?)
         }
     }
-
 }

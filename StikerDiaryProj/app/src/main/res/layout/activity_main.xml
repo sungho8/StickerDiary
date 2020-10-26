@@ -10,10 +10,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:gravity="center"
         android:background="#C7B5FF">
         <TextView
+            android:clickable="true"
+            android:id="@+id/pre"
             android:text="◀"
             android:textSize="20dp"
             android:textColor="#ffffff"
@@ -30,6 +32,8 @@
             android:textStyle="bold"
             android:textSize="25dp"/>
         <TextView
+            android:clickable="true"
+            android:id="@+id/next"
             android:text="▶"
             android:textSize="20dp"
             android:textColor="#ffffff"

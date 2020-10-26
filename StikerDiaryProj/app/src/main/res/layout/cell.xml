@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
             android:paddingHorizontal="10dp"
+            android:textStyle="bold"
             android:textColor="#C7B5FF"
             android:text="day"/>
     </RelativeLayout>

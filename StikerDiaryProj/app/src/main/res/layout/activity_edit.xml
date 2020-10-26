@@ -5,29 +5,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="50dp"
     tools:context="com.baeksoo.stickerdiary.EditActivity">
 
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/tvEditTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:hint="제목"
+        android:textSize="30dp"/>
 
-        <EditText
-            android:id="@+id/tvEditTitle"
-            android:layout_width="0dp"
-            android:layout_weight="8"
-            android:layout_height="wrap_content"
-            android:hint="제목"
-            android:textSize="50dp"/>
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:background="@drawable/star_checkbox"/>
+    <TextView
+        android:id="@+id/tvStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEditTitle"
+        android:text="시작"
+        android:textSize="20dp"/>
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvStartDate"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStart"
+        android:layout_marginBottom="20dp"
+        android:text="10월 21일"
+        android:textColor="#C7B5FF"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/tvStartTime"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21 : 13"
+        android:textSize="30dp"
+        android:textColor="#C7B5FF"
+        android:layout_alignTop="@id/tvStartDate"
+        android:layout_alignBottom="@id/tvStartDate"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/tvEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvStartDate"
+        android:text="종료"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEnd"
+        android:layout_marginBottom="20dp"
+        android:text="10월 21일"
+        android:textColor="#C7B5FF"
+        android:textSize="30dp"/>
+
+    <TextView
+        android:id="@+id/tvEndTime"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21 : 13"
+        android:textSize="30dp"
+        android:layout_alignTop="@id/tvEndDate"
+        android:textColor="#C7B5FF"
+        android:layout_alignBottom="@id/tvEndDate"
+        android:layout_alignParentRight="true"/>
+
+    <ImageView
+        android:id="@+id/ivSticker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/star"
+        android:layout_below="@+id/tvEndDate"
+        android:clickable="true"/>
+
+    <EditText
+        android:id="@+id/edtMemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSticker"
+        android:layout_marginVertical="20dp"
+        android:hint="내용"
+        android:textSize="25dp"/>
+
+    <Button
+        android:id="@+id/btnOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtMemo"
+        android:text="확인"/>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btnOK"
+        android:layout_alignTop="@+id/btnOK"
+        android:layout_alignBottom="@+id/btnOK"
+        android:text="취소"/>
 
 
 </RelativeLayout>
