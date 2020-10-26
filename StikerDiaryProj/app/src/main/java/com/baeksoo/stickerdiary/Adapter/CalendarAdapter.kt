@@ -35,10 +35,8 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
         // 현재 달이 아닌 날짜는 흐리게 표시
         if(position <= 6 &&  Integer.parseInt(holder.day.text.toString()) > 20){
-                Log.i("1일보다 전",holder.day.text.toString())
                 holder.day.alpha = 0.3f
         }else if(position >= 28 && Integer.parseInt(holder.day.text.toString()) < 15){
-            Log.i("31일보다 후",holder.day.text.toString())
             holder.day.alpha = 0.3f
         }else{
             holder.day.alpha = 1f
@@ -59,5 +57,4 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
             dialog.show(mainActivity.supportFragmentManager,dialog.tag)
         }
     }
-
 }

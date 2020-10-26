@@ -28,13 +28,17 @@ class MainActivity : AppCompatActivity() {
     private var pageYear = year;
     private var pageMonth = month;
 
+    private var scheduleList = ArrayList<Schedule>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
-        makeCalendar(10*12);    // year * 12 10년치 달력 생성
+        val firebaseController = FirebaseController("sungho0830");
+        scheduleList = firebaseController.ReadAllSchedule()
+
+        makeCalendar(10 * 12);    // year * 12 10년치 달력 생성
 
         pager.adapter = CustomPagerAdapter()
         pager.setCurrentItem(view_list.count() / 2)     // 시작 위치를 현재로
@@ -59,9 +63,6 @@ class MainActivity : AppCompatActivity() {
         next.setOnClickListener(View.OnClickListener {
             pager.setCurrentItem(++pager.currentItem,true);
         })
-
-//        val schedule = Schedule("20201021","20201021","2100","2200","운동하기","sticker1","")
-//        schedule.UploadSchedule("sungho0830")
     }
 
     fun makeCalendar(count : Int){
@@ -76,12 +77,7 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter =
-                CalendarAdapter(
-                    this,
-                    this,
-                    dateCalculator.setData(y, m)
-                )
+            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m))
 
             // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
