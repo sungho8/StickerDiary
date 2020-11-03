@@ -49,6 +49,7 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
         // 아이템 클릭 리스너
         holder.itemView.setOnClickListener {
+
             val item = Array(10,{ i -> "$i + list" })
             val sadapter = ScheduleListAdapter(context, R.layout.clist_item,item)
 
