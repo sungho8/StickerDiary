@@ -19,7 +19,6 @@ class FirebaseController(var userid : String){
     // 데이터 하나 읽기
     fun ReadSchedule(){
         val myRef = Firebase.database.getReference(userid)
-
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(data: DataSnapshot) {
                 for (snapshot in data.children) {
@@ -28,12 +27,12 @@ class FirebaseController(var userid : String){
                     }
                 }
             }
-
             override fun onCancelled(p0: DatabaseError) {
             }
         })
     }
 
+    // 해당 유저의 모든 일정을 불러온다.
     fun ReadAllSchedule() : ArrayList<Schedule>{
         val myRef = Firebase.database.getReference(userid)
         var scheduleList = ArrayList<Schedule>()
@@ -42,9 +41,8 @@ class FirebaseController(var userid : String){
             override fun onDataChange(data: DataSnapshot) {
                 for (snapshot in data.children) {
                     val schedule = snapshot.getValue(Schedule :: class.java)
-                    Log.d("ttt", schedule.toString())
                     if (schedule != null) {
-
+                        Log.d("title : ", schedule.Title)
                         scheduleList.add(schedule)
                     }
                 }

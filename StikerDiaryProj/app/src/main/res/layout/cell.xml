@@ -17,8 +17,10 @@
             android:textStyle="bold"
             android:textColor="#C7B5FF"
             android:text="day"/>
+        
         <ImageView
-            android:src="@drawable/teststicker"
+            android:src="@drawable/circle"
+            android:id="@+id/ivDay"
             android:scaleType="centerInside"
             android:layout_centerInParent="true"
             android:layout_below="@+id/tvDay"

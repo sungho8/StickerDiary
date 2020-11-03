@@ -46,7 +46,7 @@
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/btnAdd"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint = "#C7B5FF"

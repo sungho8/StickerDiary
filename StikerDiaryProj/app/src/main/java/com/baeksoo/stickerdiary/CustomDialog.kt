@@ -1,8 +1,10 @@
 package com.baeksoo.stickerdiary
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.baeksoo.stickerdiary.Adapter.ScheduleListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.dialog_schedule.*
 
 class CustomDialog : DialogFragment(){
@@ -35,6 +38,10 @@ class CustomDialog : DialogFragment(){
             findViewById<TextView>(R.id.tvDay)?.text = title
             findViewById<ListView>(R.id.list)?.adapter = adapter
 
+            findViewById<FloatingActionButton>(R.id.btnAdd)?.setOnClickListener{
+                //val nextIntent = Intent(this, Activity::class.java)
+                //startActivity(nextIntent)
+            }
 //            findViewById<Button>(R.id.btn_negative)?.setOnClickListener {
 //                dismiss()
 //                listener?.onClickPositiveBtn()

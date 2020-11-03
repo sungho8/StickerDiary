@@ -20,7 +20,7 @@ class CalendarCalculator{
         //오늘 날짜를 1일로 변경
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         val firstDay = calendar.get(Calendar.DAY_OF_WEEK) - 1 //일 : 1 ~ 토 : 7
-        Log.i("1일이 무슨 요일", firstDay.toString())
+        //Log.i("1일이 무슨 요일", firstDay.toString())
 
         //달력에서 저번달을 표시해주기 위해
         calendar.add(Calendar.DAY_OF_MONTH, - firstDay)
