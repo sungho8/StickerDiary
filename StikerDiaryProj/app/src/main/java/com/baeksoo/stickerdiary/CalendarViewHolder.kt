@@ -1,6 +1,8 @@
 package com.baeksoo.stickerdiary
 
 import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,5 +37,11 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
     fun onBindView(position: Int, list: ArrayList<Data>) {
         // 데이터를 화면에 그리기.
         day.text = list[position].day
+
+        //sticker.setImageResource(R.drawable.teststicker)
+    }
+
+    fun setSticker(context : Context){
+        sticker.setImageResource(R.drawable.teststicker)
     }
 }

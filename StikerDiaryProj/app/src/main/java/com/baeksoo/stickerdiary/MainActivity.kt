@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m), scheduleList, y, m)
+            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m), scheduleList, y, m+1)
 
             // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)

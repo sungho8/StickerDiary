@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.baeksoo.stickerdiary.R
+import com.baeksoo.stickerdiary.Schedule
 
-class ScheduleListAdapter(context: Context, resource: Int, item: Array<String>) : ArrayAdapter<String>(context,resource,item){
+class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Schedule>) : ArrayAdapter<Schedule>(context,resource,item){
     private val mContext = context
     private val mItem = item
     private val mResource = resource
@@ -25,7 +26,8 @@ class ScheduleListAdapter(context: Context, resource: Int, item: Array<String>) 
             viewHolder.timeTxt = view.findViewById(R.id.ctimetxt)
             view.tag = viewHolder
 
-            viewHolder.titleTxt.text = mItem[position]
+            viewHolder.titleTxt.text = mItem[position].Title
+            viewHolder.timeTxt.text = mItem[position].StartTime + " ~ " + mItem[position].EndTime
 
             // 리스트 클릭 리스너
             viewHolder.item.setOnClickListener {

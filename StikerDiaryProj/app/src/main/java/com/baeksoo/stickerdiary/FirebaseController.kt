@@ -1,25 +1,29 @@
 package com.baeksoo.stickerdiary
 
+import android.content.Context
 import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class FirebaseController(var userid : String){
 
     // 데이터 쓰기
     fun UploadSchedule(schedule: Schedule){
-        val myRef = Firebase.database.getReference(userid)
-        myRef.push().setValue(schedule);
+        val dbRef = Firebase.database.getReference(userid)
+        dbRef.push().setValue(schedule);
     }
 
     // 데이터 하나 읽기
     fun ReadSchedule(){
-        val myRef = Firebase.database.getReference(userid)
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        val dbRef = Firebase.database.getReference(userid)
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(data: DataSnapshot) {
                 for (snapshot in data.children) {
                     for(schedule in snapshot.children){
@@ -32,27 +36,13 @@ class FirebaseController(var userid : String){
         })
     }
 
-    // 해당 유저의 모든 일정을 불러온다.
-    fun ReadAllSchedule() : ArrayList<Schedule>{
-        val myRef = Firebase.database.getReference(userid)
-        var scheduleList = ArrayList<Schedule>()
+    fun ReadSticker(imageView : ImageView, context : Context){
+        val storageRef = Firebase.storage.getReference("sticker1.png")
 
-        myRef.addValueEventListener(object  : ValueEventListener{
-            override fun onDataChange(data: DataSnapshot) {
-                for (snapshot in data.children) {
-                    val schedule = snapshot.getValue(Schedule :: class.java)
-                    if (schedule != null) {
-                        Log.d("title : ", schedule.Title)
-                        scheduleList.add(schedule)
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        return scheduleList
+        Glide.with(context)
+            .load(storageRef)
+            .override(50, 50)
+            .error(R.drawable.teststicker)
+            .into(imageView)
     }
 }
