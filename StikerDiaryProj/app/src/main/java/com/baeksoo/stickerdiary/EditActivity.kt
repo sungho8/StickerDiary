@@ -2,6 +2,7 @@ package com.baeksoo.stickerdiary
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +44,15 @@ class EditActivity : AppCompatActivity() {
 
             val schedule = Schedule(startday,endday,starttime,endtime,title,"sticker2",content)
             FirebaseController("sungho0830").UploadSchedule(schedule)
+
+
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
+        }
+
+        btnCancel.setOnClickListener{
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
         }
     }
 
@@ -74,7 +84,7 @@ class EditActivity : AppCompatActivity() {
                 tvStartDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, syear, smonth, sday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, syear, smonth - 1, sday)
             datepPicker.show()
         }
 
@@ -98,7 +108,7 @@ class EditActivity : AppCompatActivity() {
                 tvEndDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, eyear, emonth, eday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, eyear, emonth - 1, eday)
             datepPicker.show()
         }
 

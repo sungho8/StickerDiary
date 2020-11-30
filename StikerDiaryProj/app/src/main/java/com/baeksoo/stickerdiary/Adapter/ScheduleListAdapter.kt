@@ -1,11 +1,15 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import com.baeksoo.stickerdiary.EditActivity
 import com.baeksoo.stickerdiary.R
 import com.baeksoo.stickerdiary.Schedule
 
@@ -31,8 +35,10 @@ class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Sched
 
             // 리스트 클릭 리스너
             viewHolder.item.setOnClickListener {
-                // 수정페이지로 넘어가면됨
-                Log.d("dd" , viewHolder.titleTxt.text.toString())
+                val schedule = mItem[position]
+                val nextIntent = Intent(mContext, EditActivity::class.java)
+                nextIntent.putExtra("Schedule", schedule)
+                //startActivity(nextIntent)
             }
 
             return view

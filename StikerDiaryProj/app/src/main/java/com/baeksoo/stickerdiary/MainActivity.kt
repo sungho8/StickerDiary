@@ -23,6 +23,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private val dateCalculator = CalendarCalculator()
+    private val longSchedules = ArrayList<String>()
 
     private var view_list = ArrayList<View>()
     private var month_list = ArrayList<String>()
@@ -76,7 +77,8 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + (i + month) % 12) % 12
             }
 
-            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m), scheduleList, y, m+1)
+            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m),
+                scheduleList, y, m+1, longSchedules)
 
             // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)

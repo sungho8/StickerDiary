@@ -37,19 +37,17 @@ class CustomDialog : DialogFragment(){
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         view?.apply {
-            findViewById<TextView>(R.id.tvDay)?.text = month + "월" + day +"일"
+            findViewById<TextView>(R.id.tvDay)?.text = month + "월 " + day +"일"
             findViewById<ListView>(R.id.list)?.adapter = adapter
 
             findViewById<FloatingActionButton>(R.id.btnAdd)?.setOnClickListener{
                 val nextIntent = Intent(context, EditActivity::class.java)
-
                 if(month?.length == 1)
                     month = "0" + month
                 if(day?.length == 1)
                     day = "0" + day
 
                 val seday = month + day
-                Log.d("dayis",seday)
                 val schedule = Schedule(seday, seday, "", "", "", "", "")
                 nextIntent.putExtra("Schedule", schedule)
                 startActivity(nextIntent)
@@ -78,22 +76,6 @@ class CustomDialog : DialogFragment(){
             dialog.adapter = sadapter
             return this
         }
-
-//
-//        fun setPositiveBtnText(text: String): CustomDialogBuilder {
-//            dialog.positiveBtnText = text
-//            return this
-//        }
-//
-//        fun setNegativeBtnText(text: String): CustomDialogBuilder {
-//            dialog.negativeBtnText = text
-//            return this
-//        }
-//
-//        fun setBtnClickListener(listener: CustomDialogListener): CustomDialogBuilder {
-//            dialog.listener = listener
-//            return this
-//        }
 
         fun create(): CustomDialog {
             return dialog
