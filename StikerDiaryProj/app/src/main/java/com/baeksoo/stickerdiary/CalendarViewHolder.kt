@@ -22,15 +22,18 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
     val sticker : ImageView
     val line1 : View
     val line2 : View
+    val lineTxt1 : TextView
+    val lineTxt2 : TextView
 
-        //초기화
+    //초기화
     init {
         this.day = calendarView.findViewById(R.id.tvDay)
         this.sticker = calendarView.findViewById(R.id.ivDay)
         this.line1 = calendarView.findViewById(R.id.line1)
         this.line2 = calendarView.findViewById(R.id.line2)
+        this.lineTxt1 = calendarView.findViewById(R.id.lineTxt1)
+        this.lineTxt2 = calendarView.findViewById(R.id.lineTxt2)
     }
-
 
     /**팩토리 함수 */
     companion object {
@@ -45,8 +48,38 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
         day.text = list[position].day
     }
 
-    fun setSticker(context : Context){
-        sticker.setImageResource(R.drawable.teststicker)
-        line1.setBackgroundColor(ContextCompat.getColor(context, R.color.colorHighLight))
+    fun showSchedule(context : Context, schedule: Schedule?, i : Int){
+        if (schedule == null)
+            return
+
+        if(i == 0){
+            if(schedule.isStart)
+                lineTxt1.text = schedule.Title
+            line1.setBackgroundColor(context.getColor(R.color.colorHighLight))
+        }
+        else if(i == 1){
+            if(schedule.isStart)
+                lineTxt2.text = schedule.Title
+            line2.setBackgroundColor(context.getColor(R.color.colorWeekend))
+        }
     }
+//
+//    fun setSticker(context : Context){
+//        sticker.setImageResource(R.drawable.teststicker)
+//        val count = slist.size - 1
+//        for(i in 0 .. count){
+//            if(i == 2)
+//                break
+//
+//            if(i == 0 && !slist[i].isLong){
+//                lineTxt1.text = slist[i].Title
+//            }else if(i == 1 && !slist[i].isLong){
+//                lineTxt2.text = slist[i].Title
+//            }
+//        }
+//
+//        setLine(context, slist)
+//    }
+//
+
 }

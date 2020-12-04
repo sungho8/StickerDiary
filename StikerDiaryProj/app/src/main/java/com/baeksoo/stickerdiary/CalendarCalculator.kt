@@ -31,5 +31,30 @@ class CalendarCalculator{
         return list
     }
 
+    // data 읽기
+
+
+    fun indexDay(y: Int, m: Int, d: Int) : Long{
+        return totalDay(y,m,d) - totalDay(y - 10,1,1)
+    }
+
+    // 날짜끼리 서로 비교하기위한 날짜합
+    fun totalDay(y : Int, m:Int, d:Int) : Long
+    {
+        var monthArr = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
+        var total = (y - 1) * 365L + (y - 1) / 4 - (y - 1) / 100 + (y - 1) / 400;
+
+        if((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+            monthArr[1] = 29
+        else
+            monthArr[1] = 28
+
+        for(i in 0 .. m-1)
+            total += monthArr[i];
+
+        total += d;
+
+        return total;
+    }
 
 }

@@ -48,7 +48,7 @@ class CustomDialog : DialogFragment(){
                     day = "0" + day
 
                 val seday = month + day
-                val schedule = Schedule(seday, seday, "", "", "", "", "")
+                val schedule = Schedule(seday, seday, "", "",  "", "")
                 nextIntent.putExtra("Schedule", schedule)
                 startActivity(nextIntent)
             }

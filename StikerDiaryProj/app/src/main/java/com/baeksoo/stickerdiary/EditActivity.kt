@@ -42,7 +42,7 @@ class EditActivity : AppCompatActivity() {
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
-            val schedule = Schedule(startday,endday,starttime,endtime,title,"sticker2",content)
+            val schedule = Schedule(startday,endday,starttime,endtime,title,content)
             FirebaseController("sungho0830").UploadSchedule(schedule)
 
 
@@ -79,12 +79,12 @@ class EditActivity : AppCompatActivity() {
             var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
                 // i2월 i3일
                 syear = i
-                smonth = i2
+                smonth = i2 + 1
                 sday = i3
                 tvStartDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, syear, smonth - 1, sday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, syear, smonth - 1, sday)
             datepPicker.show()
         }
 
@@ -103,12 +103,12 @@ class EditActivity : AppCompatActivity() {
             var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
                 // i2월 i3일
                 eyear = i
-                ehour = i2
+                emonth = i2 + 1
                 eday = i3
                 tvEndDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, eyear, emonth - 1, eday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, eyear, emonth - 1, eday)
             datepPicker.show()
         }
 
