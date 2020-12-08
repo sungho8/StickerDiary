@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             else
                 monthArr[1] = 28
 
-
             // month
             for(j in 0 .. 11){
                 val m = j % 12    // 0 ~ 11
@@ -108,9 +107,9 @@ class MainActivity : AppCompatActivity() {
             var eday = Integer.parseInt(schedule.EndDay.substring(6,8))
 
             val cc = CalendarCalculator()
-            val stotal = (cc.indexDay(syear,smonth,sday)).toInt()
-            val etotal = (cc.indexDay(eyear,emonth,eday)).toInt()
-
+            val stotal = (cc.indexDay( syear, smonth, sday)).toInt()
+            val etotal = (cc.indexDay( eyear, emonth, eday)).toInt()
+            Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
             var scheduleLayer = 0
             for(i in stotal .. etotal){
                 var isStart = false
@@ -130,6 +129,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getScheduleLayer(index : Int) : Int{
+        var count = 0
+        for(i in 0 until dateList[index].size){
+            if(dateList[index][i] != null){
+                count ++
+            }
+        }
+
+        if(count >= 2)
+            return dateList[index].size
+
         for(i in 0 until dateList[index].size){
             if(dateList[index][i] == null){
                 return i

@@ -26,6 +26,8 @@ class EditActivity : AppCompatActivity() {
     var ehour = cal.get(Calendar.HOUR)
     var eminute = cal.get(Calendar.MINUTE)
 
+    var colorIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
@@ -33,18 +35,30 @@ class EditActivity : AppCompatActivity() {
 
         initView()
 
+        ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[0])
+        btnColor.setOnClickListener {
+            val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
+                .setColorImage(ivColor)
+                .create()
+
+            dialog.setOnColorClickedListener{ content ->
+                colorIndex = content
+            }
+            dialog.show(this.supportFragmentManager,dialog.tag)
+        }
+
         btnOK.setOnClickListener{
             val startday = transformDay(syear,smonth,sday)
             val endday =transformDay(eyear,emonth,eday)
             val starttime = transformTime(shour,sminute)
             val endtime = transformTime(ehour,eminute)
+            val sColor = colorIndex
 
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
-            val schedule = Schedule(startday,endday,starttime,endtime,title,content)
+            val schedule = Schedule(colorIndex,startday,endday,starttime,endtime,title,content)
             FirebaseController("sungho0830").UploadSchedule(schedule)
-
 
             val nextIntent = Intent(this, MainActivity::class.java)
             startActivity(nextIntent)
@@ -123,6 +137,7 @@ class EditActivity : AppCompatActivity() {
             timePicker.show()
         }
     }
+
     fun transformDay(y : Int, m : Int, d : Int) : String{
         var yy = "" + y
         var mm = "" + m

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +14,8 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.baeksoo.stickerdiary.Adapter.ScheduleListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.dialog_schedule.*
 
-class CustomDialog : DialogFragment(){
+class ScheduleDialog : DialogFragment(){
     var month : String? = null
     var day : String? = null
     var adapter : ScheduleListAdapter? = null
@@ -48,7 +46,7 @@ class CustomDialog : DialogFragment(){
                     day = "0" + day
 
                 val seday = month + day
-                val schedule = Schedule(seday, seday, "", "",  "", "")
+                val schedule = Schedule(0,seday, seday, "", "",  "", "")
                 nextIntent.putExtra("Schedule", schedule)
                 startActivity(nextIntent)
             }
@@ -56,7 +54,7 @@ class CustomDialog : DialogFragment(){
     }
 
     class CustomDialogBuilder {
-        private val dialog = CustomDialog()
+        private val dialog = ScheduleDialog()
 
         fun setContext(context : Context) : CustomDialogBuilder{
             return this
@@ -77,7 +75,7 @@ class CustomDialog : DialogFragment(){
             return this
         }
 
-        fun create(): CustomDialog {
+        fun create(): ScheduleDialog {
             return dialog
         }
     }

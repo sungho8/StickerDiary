@@ -79,19 +79,33 @@
         android:layout_alignBottom="@id/tvEndDate"
         android:layout_alignParentRight="true"/>
 
-    <ImageView
-        android:id="@+id/ivSticker"
+    <LinearLayout
+        android:id="@+id/btnColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/star"
         android:layout_below="@+id/tvEndDate"
-        android:clickable="true"/>
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/ivColor"
+            android:src="@drawable/circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:text="색상 변경"
+            android:textSize="20dp"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/edtMemo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivSticker"
+        android:layout_below="@+id/btnColor"
         android:layout_marginVertical="20dp"
         android:hint="내용"
         android:textSize="25dp"/>

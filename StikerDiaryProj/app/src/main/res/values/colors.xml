@@ -6,8 +6,36 @@
 
 
     <color name="colorMain">#C7B5FF</color>
-    <color name="colorHighLight">#03A9F4</color>
+
     <color name="colorWeekend">#ff1200</color>
     <color name="colorLineTxt">#ffffff</color>
+
+    <color name="colorSchedule0">#F44336</color>
+    <color name="colorSchedule1">#E91E63</color>
+    <color name="colorSchedule2">#9C27B0</color>
+    <color name="colorSchedule3">#673AB7</color>
+    <color name="colorSchedule4">#3F51B5</color>
+    <color name="colorSchedule5">#2196F3</color>
+    <color name="colorSchedule6">#00BCD4</color>
+    <color name="colorSchedule7">#009688</color>
+    <color name="colorSchedule8">#4CAF50</color>
+    <color name="colorSchedule9">#CDDC39</color>
+    <color name="colorSchedule10">#FFC107</color>
+    <color name="colorSchedule11">#FF5722</color>
+
+    <array name="colorArr_Schedule">
+        <item>@color/colorSchedule0</item>
+        <item>@color/colorSchedule1</item>
+        <item>@color/colorSchedule2</item>
+        <item>@color/colorSchedule3</item>
+        <item>@color/colorSchedule4</item>
+        <item>@color/colorSchedule5</item>
+        <item>@color/colorSchedule6</item>
+        <item>@color/colorSchedule7</item>
+        <item>@color/colorSchedule8</item>
+        <item>@color/colorSchedule9</item>
+        <item>@color/colorSchedule10</item>
+        <item>@color/colorSchedule11</item>
+    </array>
 
 </resources>

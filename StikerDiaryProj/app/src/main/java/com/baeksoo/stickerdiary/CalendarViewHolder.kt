@@ -2,6 +2,7 @@ package com.baeksoo.stickerdiary
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarView) {
 
     // 뷰 홀더를 상속 받고나면 생성자에서 상위 홀더에 view 를 전달.
+    var count : Int
     val day : TextView
     val sticker : ImageView
     val line1 : View
@@ -27,6 +29,7 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
 
     //초기화
     init {
+        this.count = 0
         this.day = calendarView.findViewById(R.id.tvDay)
         this.sticker = calendarView.findViewById(R.id.ivDay)
         this.line1 = calendarView.findViewById(R.id.line1)
@@ -52,34 +55,21 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
         if (schedule == null)
             return
 
+        var colorArr : IntArray = itemView.resources.getIntArray(R.array.colorArr_Schedule)
+
         if(i == 0){
             if(schedule.isStart)
                 lineTxt1.text = schedule.Title
-            line1.setBackgroundColor(context.getColor(R.color.colorHighLight))
+            line1.setBackgroundColor(colorArr[schedule.ColorIndex])
+            count++
+            //Log.d("과연? ","count : (${count} , ${i}) ,${day.text.toString()} , ${schedule.Title}")
         }
-        else if(i == 1){
+        else if(i >= 1 && count < 2){
             if(schedule.isStart)
                 lineTxt2.text = schedule.Title
-            line2.setBackgroundColor(context.getColor(R.color.colorWeekend))
+            line2.setBackgroundColor(colorArr[schedule.ColorIndex])
+            count ++
+            //Log.d("과연? ","count : (${count} , ${i}) ,${day.text.toString()} , ${schedule.Title}")
         }
     }
-//
-//    fun setSticker(context : Context){
-//        sticker.setImageResource(R.drawable.teststicker)
-//        val count = slist.size - 1
-//        for(i in 0 .. count){
-//            if(i == 2)
-//                break
-//
-//            if(i == 0 && !slist[i].isLong){
-//                lineTxt1.text = slist[i].Title
-//            }else if(i == 1 && !slist[i].isLong){
-//                lineTxt2.text = slist[i].Title
-//            }
-//        }
-//
-//        setLine(context, slist)
-//    }
-//
-
 }

@@ -1,10 +1,12 @@
 package com.baeksoo.stickerdiary
 
+import android.graphics.Color
 import android.os.Parcel
 import android.os.Parcelable
 
 class Schedule(): Parcelable {
     var isStart : Boolean = false
+    var ColorIndex : Int = 0
     var StartDay : String = ""
     var EndDay : String = ""
     var StartTime : String = ""
@@ -13,6 +15,7 @@ class Schedule(): Parcelable {
     var Content: String = ""
 
     constructor(parcel: Parcel) : this() {
+        ColorIndex = parcel.readInt()
         StartDay = parcel.readString()
         EndDay = parcel.readString()
         StartTime = parcel.readString()
@@ -21,8 +24,9 @@ class Schedule(): Parcelable {
         Content = parcel.readString()
     }
 
-    constructor(StartDay : String, EndDay : String, StartTime : String, EndTime : String,
+    constructor(ColorIndex : Int, StartDay : String, EndDay : String, StartTime : String, EndTime : String,
                 Title : String,  Content: String) : this(){
+        this.ColorIndex = ColorIndex
         this.StartDay = StartDay
         this.EndDay = EndDay
         this.StartTime = StartTime
@@ -32,12 +36,13 @@ class Schedule(): Parcelable {
     }
 
     fun copy(isStart : Boolean) : Schedule{
-        val newSchedule = Schedule(this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
+        val newSchedule = Schedule(this.ColorIndex,this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
         newSchedule.isStart = isStart
         return newSchedule
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(ColorIndex)
         parcel.writeString(StartDay)
         parcel.writeString(EndDay)
         parcel.writeString(StartTime)

@@ -31,11 +31,10 @@ class CalendarCalculator{
         return list
     }
 
-    // data 읽기
-
-
+    // 입력받은 날짜 - 현재날짜로부터 10년전 1월 1일 날짜를 뺀값을 반환
     fun indexDay(y: Int, m: Int, d: Int) : Long{
-        return totalDay(y,m,d) - totalDay(y - 10,1,1)
+        var currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        return totalDay(y,m,d) - totalDay(currentYear - 10,1,1)
     }
 
     // 날짜끼리 서로 비교하기위한 날짜합

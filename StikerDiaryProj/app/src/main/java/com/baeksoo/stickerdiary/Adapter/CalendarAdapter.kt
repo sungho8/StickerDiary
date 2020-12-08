@@ -1,20 +1,11 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
-import android.graphics.Color
-import android.text.BoringLayout
-import android.util.Log
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.*
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.contracts.contract
 
 // 생성자에서 리스트 받아옴
 class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val list: ArrayList<Data>, val dateList : ArrayList<ArrayList<Schedule?>>,
@@ -31,12 +22,12 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
     override fun onBindViewHolder(holder : CalendarViewHolder, position: Int) {
         // 홀더에 정의된 함수로 뷰 그리기
         holder.onBindView(position, list)
-        val slist : ArrayList<Schedule> = ArrayList()
+        val slist : ArrayList<Schedule> = ArrayList()       // dialog에 리스트뷰 로 보내줄 일정
         val day = Integer.parseInt(holder.day.text.toString())
 
         // 간격 설정
         val layoutParams = holder.itemView.layoutParams
-        layoutParams.height = 250
+        //layoutParams.height = 250
         holder.itemView.requestLayout()
 
         // 현재 달이 아닌 날짜는 흐리게 표시
@@ -48,11 +39,10 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
             // 흐리지 않은날짜는 존재하는 일정스티커와 선을 띄운다.
             val cc = CalendarCalculator()
             val total = cc.indexDay(year, month, day).toInt()
-            var count = 0
             for(i in 0 until dateList[total].size){
                 if(dateList[total][i] != null){
-                    Log.d("schedule ","day ${year}${month}${day} , Title ${dateList[total][i]!!.Title}")
-                    holder.showSchedule(context,dateList[total][i],i)
+                    //Log.d("schedule ","day ${year}${month}${day} , Title ${dateList[total][i]!!.Title}")
+                    holder.showSchedule(context,dateList[total][i], i)
                     slist.add(dateList[total][i]!!)
                 }
             }
@@ -67,7 +57,7 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         holder.itemView.setOnClickListener {
             val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist)
 
-            val dialog = CustomDialog.CustomDialogBuilder()
+            val dialog = ScheduleDialog.CustomDialogBuilder()
                 .setContext(context)
                 .setMonth(month.toString())
                 .setDay(holder.day.text.toString())
