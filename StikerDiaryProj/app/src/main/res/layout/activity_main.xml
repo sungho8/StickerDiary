@@ -7,12 +7,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.baeksoo.stickerdiary.MainActivity">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorMain">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:gravity="center"
-        android:background="@color/colorMain">
+        android:layout_centerInParent="true">
         <TextView
             android:clickable="true"
             android:id="@+id/pre"
@@ -42,6 +45,21 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp">
+        <ImageView
+            android:id="@+id/ivmColor"
+            android:src="@drawable/circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+</RelativeLayout>
+
+
+    <LinearLayout
         android:background="#ffffff"
         android:id="@+id/linearLayoutDay"
         android:layout_width="match_parent"
@@ -53,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="SUN"
             android:textSize="15dp"
@@ -63,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="MON"
             android:textSize="15dp"
@@ -73,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="TUE"
             android:textSize="15dp"
@@ -82,7 +100,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="WED"
             android:textSize="15dp"
@@ -92,7 +110,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="THU"
             android:textSize="15dp"
@@ -102,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="FRI"
             android:textSize="15dp"
@@ -112,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorMain"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:text="SAT"
             android:textSize="15dp"

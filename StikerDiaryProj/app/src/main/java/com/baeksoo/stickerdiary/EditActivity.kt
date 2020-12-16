@@ -5,14 +5,15 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
+import com.baeksoo.stickerdiary.Data.Schedule
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
 class EditActivity : AppCompatActivity() {
-
     private var cal = Calendar.getInstance()
+
+    var uid = ""
 
     var syear = cal.get(Calendar.YEAR)
     var smonth = cal.get(Calendar.MONTH)
@@ -30,6 +31,7 @@ class EditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme2)
         setContentView(R.layout.activity_edit)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
@@ -52,15 +54,16 @@ class EditActivity : AppCompatActivity() {
             val endday =transformDay(eyear,emonth,eday)
             val starttime = transformTime(shour,sminute)
             val endtime = transformTime(ehour,eminute)
-            val sColor = colorIndex
 
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
             val schedule = Schedule(colorIndex,startday,endday,starttime,endtime,title,content)
-            FirebaseController("sungho0830").UploadSchedule(schedule)
+            FirebaseController(uid).UploadSchedule(schedule)
 
             val nextIntent = Intent(this, MainActivity::class.java)
+            nextIntent.putExtra("uid",uid);
+            nextIntent.putExtra("date",startday)
             startActivity(nextIntent)
         }
 
@@ -71,12 +74,19 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun initView(){
+        if(intent.hasExtra("uid")){
+            uid = intent.getStringExtra("uid")
+        }
+
         if(intent.hasExtra("Schedule")){
             var schedule = intent.getParcelableExtra<Schedule>("Schedule")
 
-            val m = schedule.StartDay.substring(0,2)
-            val d = schedule.StartDay.substring(2,4)
+            val y = schedule.StartDay.substring(0,4)
+            val m = schedule.StartDay.substring(4,6)
+            val d = schedule.StartDay.substring(6,8)
 
+            syear = Integer.parseInt(y)
+            eyear = Integer.parseInt(y)
             smonth = Integer.parseInt(m)
             emonth = Integer.parseInt(m)
             sday = Integer.parseInt(d)

@@ -1,19 +1,14 @@
 package com.baeksoo.stickerdiary
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.res.TypedArray
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.baeksoo.stickerdiary.Data.Data
+import com.baeksoo.stickerdiary.Data.Schedule
 
 //생성자 지정 , 상위클래스 view 넘겨줌.  super(calendarView)
 class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarView) {
@@ -59,17 +54,23 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
 
         if(i == 0){
             if(schedule.isStart)
-                lineTxt1.text = schedule.Title
+                lineTxt1.text = titleCut(schedule.Title)
             line1.setBackgroundColor(colorArr[schedule.ColorIndex])
             count++
-            //Log.d("과연? ","count : (${count} , ${i}) ,${day.text.toString()} , ${schedule.Title}")
         }
         else if(i >= 1 && count < 2){
             if(schedule.isStart)
-                lineTxt2.text = schedule.Title
+                lineTxt2.text = titleCut(schedule.Title)
             line2.setBackgroundColor(colorArr[schedule.ColorIndex])
             count ++
-            //Log.d("과연? ","count : (${count} , ${i}) ,${day.text.toString()} , ${schedule.Title}")
+        }
+    }
+    
+    fun titleCut(t : String) : String{
+        if(t.length > 5){
+            return t.substring(0,4) + "..."
+        }else{
+            return t
         }
     }
 }

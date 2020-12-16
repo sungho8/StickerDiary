@@ -1,24 +1,30 @@
 package com.baeksoo.stickerdiary
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.baeksoo.stickerdiary.Adapter.CalendarAdapter
+import com.baeksoo.stickerdiary.Data.Schedule
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import java.util.logging.Level.parse
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -39,16 +45,36 @@ class MainActivity : AppCompatActivity() {
 
     private val countCalendar = 10  // 현재날짜로부터 전후 몇년의 달력을 만들지
 
+    private var mColorIndex = 0
+    private var uid = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setTheme(R.style.AppTheme2)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
+        setContentView(R.layout.activity_main)
+
+
+        if(intent.hasExtra("uid"))
+            uid = intent.getStringExtra("uid")
 
         ReadAllSchedule()
+
+        ivmColor.setOnClickListener{
+            val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
+                .setColorImage(ivmColor)
+                .create()
+
+            dialog.setOnColorClickedListener{ content ->
+                mColorIndex = content
+                Log.d("color is : ",mColorIndex.toString())
+            }
+            dialog.show(this.supportFragmentManager,dialog.tag)
+        }
     }
 
     fun ReadAllSchedule(){
-        val myRef = Firebase.database.getReference("sungho0830").child("Schedule")
+        val myRef = Firebase.database.getReference(uid).child("Schedule")
 
         myRef.addValueEventListener(object  : ValueEventListener {
             override fun onDataChange(data: DataSnapshot) {
@@ -159,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 y = year - 1 + (i  + 1) / 12
                 m = (12 + i  % 12) % 12
             }
-            currentView.recyclerView.adapter = CalendarAdapter(this, this, dateCalculator.setData(y, m),
+            currentView.recyclerView.adapter = CalendarAdapter(this, this, uid , dateCalculator.setData(y, m),
                 dateList, y, m + 1)
 
             // 구분선
@@ -175,7 +201,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         pager.adapter = CustomPagerAdapter()
-        pager.setCurrentItem(view_list.count() / 2 + month)     // 시작 위치를 현재로
+
+        // edit -> main 인경우 입력한 스케쥴 날짜로
+        if(intent.hasExtra("date"))
+        {
+            val y = 12 * (Integer.parseInt(intent.getStringExtra("date").substring(0,4)) - year)
+            val m = Integer.parseInt(intent.getStringExtra("date").substring(4,6)) - (month + 1)
+
+            Log.d("dddddd", "${y}  + ${m}")
+
+            pager.setCurrentItem(view_list.count() / 2 + month + (y + m))
+        }
+        // 시작 위치를 현재로
+        else
+        {
+            pager.setCurrentItem(view_list.count() / 2 + month)
+        }
+
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {

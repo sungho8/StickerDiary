@@ -1,6 +1,5 @@
-package com.baeksoo.stickerdiary
+package com.baeksoo.stickerdiary.Data
 
-import android.graphics.Color
 import android.os.Parcel
 import android.os.Parcelable
 
@@ -35,7 +34,7 @@ class Schedule(): Parcelable {
         this.Content = Content
     }
 
-    fun copy(isStart : Boolean) : Schedule{
+    fun copy(isStart : Boolean) : Schedule {
         val newSchedule = Schedule(this.ColorIndex,this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
         newSchedule.isStart = isStart
         return newSchedule

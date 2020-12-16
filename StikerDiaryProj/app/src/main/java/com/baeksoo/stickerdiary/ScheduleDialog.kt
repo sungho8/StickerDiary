@@ -13,9 +13,12 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.baeksoo.stickerdiary.Adapter.ScheduleListAdapter
+import com.baeksoo.stickerdiary.Data.Schedule
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ScheduleDialog : DialogFragment(){
+    var uid : String? = null
+    var year : Int? = null
     var month : String? = null
     var day : String? = null
     var adapter : ScheduleListAdapter? = null
@@ -45,9 +48,10 @@ class ScheduleDialog : DialogFragment(){
                 if(day?.length == 1)
                     day = "0" + day
 
-                val seday = month + day
+                val seday = year.toString() + month + day
                 val schedule = Schedule(0,seday, seday, "", "",  "", "")
                 nextIntent.putExtra("Schedule", schedule)
+                nextIntent.putExtra("uid", uid)
                 startActivity(nextIntent)
             }
         }
@@ -60,17 +64,27 @@ class ScheduleDialog : DialogFragment(){
             return this
         }
 
-        fun setMonth(month: String) : CustomDialogBuilder {
+        fun setuid(uid : String) : CustomDialogBuilder{
+            dialog.uid = uid
+            return this
+        }
+
+        fun setYear(year : Int) : CustomDialogBuilder{
+            dialog.year = year
+            return this
+        }
+
+        fun setMonth(month : String) : CustomDialogBuilder {
             dialog.month = month
             return this
         }
 
-        fun setDay(day:String) : CustomDialogBuilder {
+        fun setDay(day : String) : CustomDialogBuilder {
             dialog.day = day
             return this
         }
 
-        fun setScheduleList(sadapter: ScheduleListAdapter): CustomDialogBuilder {
+        fun setScheduleList(sadapter : ScheduleListAdapter): CustomDialogBuilder {
             dialog.adapter = sadapter
             return this
         }

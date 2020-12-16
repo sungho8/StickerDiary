@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import com.baeksoo.stickerdiary.EditActivity
 import com.baeksoo.stickerdiary.R
-import com.baeksoo.stickerdiary.Schedule
+import com.baeksoo.stickerdiary.Data.Schedule
 
 class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Schedule>) : ArrayAdapter<Schedule>(context,resource,item){
     private val mContext = context
