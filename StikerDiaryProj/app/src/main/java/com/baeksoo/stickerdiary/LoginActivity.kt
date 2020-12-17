@@ -22,6 +22,7 @@ class LoginActivity  : AppCompatActivity(){
 
     private val RC_SIGN_IN = 99
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -87,11 +88,15 @@ class LoginActivity  : AppCompatActivity(){
             }
     }// firebaseAuthWithGoogle END
 
-
     // toMainActivity
     fun toMainActivity(user: FirebaseUser?) {
-        if(user !=null) { // MainActivity 로 이동
-            startActivity(Intent(this, MainActivity::class.java))
+        if(user !=null) {
+            // user id -> MainActivity
+            val intent = Intent(this, MainActivity::class.java)
+
+            Log.d("Uid is",user.uid)
+            intent.putExtra("uid", user.uid)
+            startActivity(intent)
             finish()
         }
     } // toMainActivity End

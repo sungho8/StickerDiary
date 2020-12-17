@@ -2,16 +2,18 @@ package com.baeksoo.stickerdiary
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
+import com.baeksoo.stickerdiary.Data.Schedule
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
 class EditActivity : AppCompatActivity() {
-
     private var cal = Calendar.getInstance()
+
+    var uid = ""
 
     var syear = cal.get(Calendar.YEAR)
     var smonth = cal.get(Calendar.MONTH)
@@ -25,16 +27,32 @@ class EditActivity : AppCompatActivity() {
     var ehour = cal.get(Calendar.HOUR)
     var eminute = cal.get(Calendar.MINUTE)
 
+    var colorIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppTheme2)
         setContentView(R.layout.activity_edit)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
         initView()
 
-        ivSticker.setOnClickListener {
-            val bottomSheet = StikerBottomSheet(supportFragmentManager)
-            bottomSheet.show(supportFragmentManager, bottomSheet.tag) }
+//        ivSticker.setOnClickListener {
+//            val bottomSheet = StikerBottomSheet(supportFragmentManager)
+//            bottomSheet.show(supportFragmentManager, bottomSheet.tag) }
+
+        ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[0])
+        btnColor.setOnClickListener {
+            val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
+                .setColorImage(ivColor)
+                .create()
+
+            dialog.setOnColorClickedListener{ content ->
+                colorIndex = content
+            }
+            dialog.show(this.supportFragmentManager,dialog.tag)
+        }
+
 
         btnOK.setOnClickListener{
             val startday = transformDay(syear,smonth,sday)
@@ -45,18 +63,35 @@ class EditActivity : AppCompatActivity() {
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
-            val schedule = Schedule(startday,endday,starttime,endtime,title,"sticker2",content)
-            FirebaseController("sungho0830").UploadSchedule(schedule)
+            val schedule = Schedule(colorIndex,startday,endday,starttime,endtime,title,content)
+            FirebaseController(uid).UploadSchedule(schedule)
+
+            val nextIntent = Intent(this, MainActivity::class.java)
+            nextIntent.putExtra("uid",uid);
+            nextIntent.putExtra("date",startday)
+            startActivity(nextIntent)
+        }
+
+        btnCancel.setOnClickListener{
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
         }
     }
 
     fun initView(){
+        if(intent.hasExtra("uid")){
+            uid = intent.getStringExtra("uid")
+        }
+
         if(intent.hasExtra("Schedule")){
             var schedule = intent.getParcelableExtra<Schedule>("Schedule")
 
-            val m = schedule.StartDay.substring(0,2)
-            val d = schedule.StartDay.substring(2,4)
+            val y = schedule.StartDay.substring(0,4)
+            val m = schedule.StartDay.substring(4,6)
+            val d = schedule.StartDay.substring(6,8)
 
+            syear = Integer.parseInt(y)
+            eyear = Integer.parseInt(y)
             smonth = Integer.parseInt(m)
             emonth = Integer.parseInt(m)
             sday = Integer.parseInt(d)
@@ -73,12 +108,12 @@ class EditActivity : AppCompatActivity() {
             var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
                 // i2월 i3일
                 syear = i
-                smonth = i2
+                smonth = i2 + 1
                 sday = i3
                 tvStartDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, syear, smonth, sday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, syear, smonth - 1, sday)
             datepPicker.show()
         }
 
@@ -97,12 +132,12 @@ class EditActivity : AppCompatActivity() {
             var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
                 // i2월 i3일
                 eyear = i
-                ehour = i2
+                emonth = i2 + 1
                 eday = i3
                 tvEndDate.text = "${i2 + 1}월 ${i3}일"
             }
 
-            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT,listener, eyear, emonth, eday)
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, eyear, emonth - 1, eday)
             datepPicker.show()
         }
 
@@ -117,6 +152,7 @@ class EditActivity : AppCompatActivity() {
             timePicker.show()
         }
     }
+
     fun transformDay(y : Int, m : Int, d : Int) : String{
         var yy = "" + y
         var mm = "" + m

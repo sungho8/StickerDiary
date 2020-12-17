@@ -17,7 +17,7 @@
             android:gravity="center"
             android:text="일정"
             android:textStyle="bold"
-            android:textColor="#C7B5FF"
+            android:textColor="?attr/colorMain"
             android:textSize="25dp"/>
         <ImageView
             android:id="@+id/csticker"
@@ -32,8 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_centerInParent="true"
-            android:layout_marginHorizontal="30dp"
-            android:background="#D6D6D6"/>
+            android:background="?attr/colorMain"/>
         <ScrollView
             android:layout_margin="20dp"
             android:layout_width="match_parent"
@@ -49,7 +48,7 @@
             android:id="@+id/btnAdd"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
-            android:backgroundTint = "#C7B5FF"
+            android:backgroundTint = "?attr/colorMain"
             android:layout_gravity="end|bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
