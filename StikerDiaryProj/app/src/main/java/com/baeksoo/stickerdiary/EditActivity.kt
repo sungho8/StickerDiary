@@ -32,6 +32,10 @@ class EditActivity : AppCompatActivity() {
 
         initView()
 
+        ivSticker.setOnClickListener {
+            val bottomSheet = StikerBottomSheet(supportFragmentManager)
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag) }
+
         btnOK.setOnClickListener{
             val startday = transformDay(syear,smonth,sday)
             val endday =transformDay(eyear,emonth,eday)
