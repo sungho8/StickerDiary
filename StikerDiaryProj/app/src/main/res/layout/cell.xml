@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:background="#ffffff"
+        android:background="?attr/colorBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
@@ -17,7 +17,7 @@
             android:textColor="?attr/colorMain"
             android:text="day"/>
         <ImageView
-            android:src="@drawable/circle"
+            android:src="@null"
             android:id="@+id/ivDay"
             android:scaleType="centerInside"
             android:layout_centerInParent="true"

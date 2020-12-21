@@ -4,7 +4,6 @@
 
     <color name="colorPrimaryDark">#C7B5FF</color>
     <color name="colorAccent">#D81B60</color>
-
     <color name="colorMain">#C7B5FF</color>
 
     <color name="colorWeekend">#ff1200</color>
@@ -38,4 +37,12 @@
         <item>@color/colorSchedule11</item>
     </array>
 
+    <color name="colorTheme0">#C7B5FF</color>
+    <color name="colorTheme1">#F6BCC4</color>
+    <color name="colorTheme2">#8FD686</color>
+    <color name="colorTheme3">#06A6FF</color>
+    <color name="colorTheme4">#F46D70</color>
+    <color name="colorTheme5">#8CD6E3</color>
+    <color name="colorTheme6">#F6D678</color>
+    <color name="colorTheme7">#000000</color>
 </resources>

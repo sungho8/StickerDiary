@@ -1,6 +1,8 @@
 package com.baeksoo.stickerdiary
 
+import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -50,26 +52,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.AppTheme2)
+        setTheme(MySharedReferences.prefs.getThemeId())
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
         setContentView(R.layout.activity_main)
 
-
         if(intent.hasExtra("uid"))
             uid = intent.getStringExtra("uid")
+        // Dark Mode
+        if(MySharedReferences.prefs.getString("Theme","Theme0") == "Theme7")
+            titleBar.setBackgroundColor(Color.BLACK)
 
         ReadAllSchedule()
 
-        ivmColor.setOnClickListener{
-            val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
-                .setColorImage(ivmColor)
-                .create()
-
-            dialog.setOnColorClickedListener{ content ->
-                mColorIndex = content
-                Log.d("color is : ",mColorIndex.toString())
-            }
-            dialog.show(this.supportFragmentManager,dialog.tag)
+        ivmOption.setOnClickListener{
+            val nextIntent = Intent(this,OptionActivity::class.java)
+            nextIntent.putExtra("uid",uid)
+            startActivity(nextIntent)
         }
     }
 

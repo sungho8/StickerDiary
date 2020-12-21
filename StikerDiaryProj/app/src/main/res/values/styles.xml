@@ -1,15 +1,58 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme0" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorMain">#C7B5FF</item>
+        <item name="colorBackground">#ffffff</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
     </style>
 
-    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorMain">#448AFF</item>
+    <style name="Theme1" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#F6BCC4</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#8FD686</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme3" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#06A6FF</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme4" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#F46D70</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme5" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#8CD6E3</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme6" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#F6D678</item>
+        <item name="colorBackground">#ffffff</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme7" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorMain">#ffffff</item>
+        <item name="colorBackground">#000000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context="com.baeksoo.stickerdiary.MainActivity">
 <RelativeLayout
+    android:id="@+id/titleBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorMain">
@@ -51,16 +52,15 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp">
         <ImageView
-            android:id="@+id/ivmColor"
-            android:src="@drawable/circle"
+            android:id="@+id/ivmOption"
+            android:src="@drawable/option"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
     </LinearLayout>
 </RelativeLayout>
 
-
     <LinearLayout
-        android:background="#ffffff"
+        android:background="?attr/colorBackground"
         android:id="@+id/linearLayoutDay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:background="#ffffff"
+        android:background="?attr/colorBackground"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
