@@ -56,11 +56,9 @@ class MainActivity : AppCompatActivity() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
         setContentView(R.layout.activity_main)
 
+
         if(intent.hasExtra("uid"))
             uid = intent.getStringExtra("uid")
-        // Dark Mode
-        if(MySharedReferences.prefs.getString("Theme","Theme0") == "Theme7")
-            titleBar.setBackgroundColor(Color.BLACK)
 
         ReadAllSchedule()
 

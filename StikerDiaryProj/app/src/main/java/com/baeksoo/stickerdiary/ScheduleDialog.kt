@@ -53,6 +53,7 @@ class ScheduleDialog : DialogFragment(){
                 nextIntent.putExtra("Schedule", schedule)
                 nextIntent.putExtra("uid", uid)
                 startActivity(nextIntent)
+
             }
         }
     }

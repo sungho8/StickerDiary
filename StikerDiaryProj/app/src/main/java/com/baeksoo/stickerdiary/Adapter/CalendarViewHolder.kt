@@ -1,4 +1,4 @@
-package com.baeksoo.stickerdiary
+package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.R
 
 //생성자 지정 , 상위클래스 view 넘겨줌.  super(calendarView)
 class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarView) {

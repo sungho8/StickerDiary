@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#C7B5FF</color>
-
-    <color name="colorPrimaryDark">#C7B5FF</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorMain">#C7B5FF</color>
+    <color name="colorToday">#DF6060</color>
 
     <color name="colorWeekend">#ff1200</color>
     <color name="colorLineTxt">#ffffff</color>

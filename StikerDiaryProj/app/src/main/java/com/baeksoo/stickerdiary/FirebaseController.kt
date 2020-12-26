@@ -21,6 +21,11 @@ class FirebaseController(var userid : String){
         dbRef.child("Schedule").push().setValue(schedule);
     }
 
+    fun UpdateSchedule(schedule : Schedule){
+
+        val dbRef = Firebase.database.getReference(userid)
+    }
+
     // 데이터 하나 읽기
     fun ReadSchedule(){
         val dbRef = Firebase.database.getReference(userid)

@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import com.baeksoo.stickerdiary.Data.Schedule
 import com.baeksoo.stickerdiary.EditActivity
 import com.baeksoo.stickerdiary.R
-import com.baeksoo.stickerdiary.Data.Schedule
 
-class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Schedule>) : ArrayAdapter<Schedule>(context,resource,item){
+
+class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Schedule>, uid : String) : ArrayAdapter<Schedule>(context,resource,item){
     private val mContext = context
     private val mItem = item
     private val mResource = resource
+    private val muid = uid
 
     //리스트에 들어갈 View를 지정해줌.
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -27,17 +31,24 @@ class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Sched
             viewHolder.item = view.findViewById(R.id.citem)
             viewHolder.titleTxt = view.findViewById(R.id.ctitletxt)
             viewHolder.timeTxt = view.findViewById(R.id.ctimetxt)
+            viewHolder.colorIv = view.findViewById(R.id.ivColor)
+
             view.tag = viewHolder
 
+            // 텍스트
             viewHolder.titleTxt.text = mItem[position].Title
             viewHolder.timeTxt.text = mItem[position].StartTime + " ~ " + mItem[position].EndTime
+            // 색상
+            var colorArr : IntArray = mContext.resources.getIntArray(R.array.colorArr_Schedule)
+            viewHolder.colorIv.setColorFilter(colorArr[mItem[position].ColorIndex])
 
             // 리스트 클릭 리스너
             viewHolder.item.setOnClickListener {
-                val schedule = mItem[position]
                 val nextIntent = Intent(mContext, EditActivity::class.java)
+                val schedule = mItem[position]
                 nextIntent.putExtra("Schedule", schedule)
-                //startActivity(nextIntent)
+                nextIntent.putExtra("uid", muid)
+                mContext.startActivity(nextIntent)
             }
 
             return view
@@ -52,5 +63,6 @@ class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Sched
         lateinit var item : LinearLayout
         lateinit var titleTxt : TextView
         lateinit var timeTxt : TextView
+        lateinit var colorIv : ImageView
     }
 }

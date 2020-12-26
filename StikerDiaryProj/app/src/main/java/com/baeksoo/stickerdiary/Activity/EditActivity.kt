@@ -5,8 +5,11 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
@@ -41,7 +44,6 @@ class EditActivity : AppCompatActivity() {
 //            val bottomSheet = StikerBottomSheet(supportFragmentManager)
 //            bottomSheet.show(supportFragmentManager, bottomSheet.tag) }
 
-        ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[0])
         btnColor.setOnClickListener {
             val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
                 .setColorImage(ivColor)
@@ -89,6 +91,10 @@ class EditActivity : AppCompatActivity() {
             val y = schedule.StartDay.substring(0,4)
             val m = schedule.StartDay.substring(4,6)
             val d = schedule.StartDay.substring(6,8)
+            val sh = schedule.StartTime.substring(0,2)
+            val sm = schedule.StartTime.substring(2,4)
+            val eh = schedule.EndTime.substring(0,2)
+            val em = schedule.EndTime.substring(2,4)
 
             syear = Integer.parseInt(y)
             eyear = Integer.parseInt(y)
@@ -96,9 +102,18 @@ class EditActivity : AppCompatActivity() {
             emonth = Integer.parseInt(m)
             sday = Integer.parseInt(d)
             eday = Integer.parseInt(d)
-        }else{
+            shour = Integer.parseInt(sh)
+            sminute = Integer.parseInt(sm)
+            ehour = Integer.parseInt(eh)
+            eminute = Integer.parseInt(em)
 
+            tvEditTitle.setText(schedule.Title)
+            ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[schedule.ColorIndex])
+            edtMemo.setText(schedule.Content)
+
+            Log.d("key",Firebase.database.getReference(uid).child("Schedule").child("-MOeF-aCm5XNB9CWDJ3w").key)
         }
+
         tvStartDate.text = "${smonth}월 ${sday}일"
         tvStartTime.text = "${shour}시 ${sminute}분"
         tvEndDate.text = "${smonth}월 ${sday}일"
@@ -165,7 +180,6 @@ class EditActivity : AppCompatActivity() {
 
         return yy + mm + dd
     }
-
     fun transformTime(h : Int, m : Int) : String{
         var hh = "" + h;
         var mm = "" + m;
