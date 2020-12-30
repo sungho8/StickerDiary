@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 for (snapshot in data.children) {
                     val schedule = snapshot.getValue(Schedule :: class.java)
                     if (schedule != null) {
+                        schedule.key = snapshot.key.toString()
                         scheduleList.add(schedule)
                     }
                 }
@@ -131,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             val cc = CalendarCalculator()
             val stotal = (cc.indexDay( syear, smonth, sday)).toInt()
             val etotal = (cc.indexDay( eyear, emonth, eday)).toInt()
-            Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
+            //Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
             var scheduleLayer = 0
             for(i in stotal .. etotal){
                 var isStart = false
@@ -203,8 +204,6 @@ class MainActivity : AppCompatActivity() {
         {
             val y = 12 * (Integer.parseInt(intent.getStringExtra("date").substring(0,4)) - year)
             val m = Integer.parseInt(intent.getStringExtra("date").substring(4,6)) - (month + 1)
-
-            Log.d("dddddd", "${y}  + ${m}")
 
             pager.setCurrentItem(view_list.count() / 2 + month + (y + m))
         }

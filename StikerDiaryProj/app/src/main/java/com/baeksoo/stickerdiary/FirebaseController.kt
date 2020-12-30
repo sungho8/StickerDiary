@@ -17,13 +17,23 @@ class FirebaseController(var userid : String){
     // 데이터 쓰기
     fun UploadSchedule(schedule: Schedule){
         val dbRef = Firebase.database.getReference(userid)
-
-        dbRef.child("Schedule").push().setValue(schedule);
+        dbRef.child("Schedule").push().setValue(schedule)
     }
 
+    // 데이터 수정
     fun UpdateSchedule(schedule : Schedule){
+        var dbRef = Firebase.database.getReference(userid).child("Schedule").child(schedule.key)
+        dbRef.removeValue()
 
-        val dbRef = Firebase.database.getReference(userid)
+        dbRef = Firebase.database.getReference(userid).child("Schedule")
+        dbRef.push().setValue(schedule)
+
+    }
+
+    // 데이터 삭제
+    fun RemoveSchedule(key : String){
+        val dbRef = Firebase.database.getReference(userid).child("Schedule").child(key)
+        dbRef.removeValue()
     }
 
     // 데이터 하나 읽기

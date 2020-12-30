@@ -31,6 +31,7 @@ class EditActivity : AppCompatActivity() {
     var eminute = cal.get(Calendar.MINUTE)
 
     var colorIndex = 0
+    var preScheduleKey = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,6 @@ class EditActivity : AppCompatActivity() {
             dialog.show(this.supportFragmentManager,dialog.tag)
         }
 
-
         btnOK.setOnClickListener{
             val startday = transformDay(syear,smonth,sday)
             val endday =transformDay(eyear,emonth,eday)
@@ -65,12 +65,17 @@ class EditActivity : AppCompatActivity() {
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
-            val schedule = Schedule(colorIndex,startday,endday,starttime,endtime,title,content)
-            FirebaseController(uid).UploadSchedule(schedule)
+            val schedule = Schedule("", colorIndex, startday, endday, starttime, endtime, title, content)
+
+            // key값이 존재한다면 일정 업데이트, 아니면 새로운 일정
+            if(preScheduleKey.length > 1)
+                FirebaseController(uid).UpdateSchedule(schedule)
+            else
+                FirebaseController(uid).UploadSchedule(schedule)
 
             val nextIntent = Intent(this, MainActivity::class.java)
-            nextIntent.putExtra("uid",uid);
-            nextIntent.putExtra("date",startday)
+            nextIntent.putExtra("uid", uid);
+            nextIntent.putExtra("date", startday)
             startActivity(nextIntent)
         }
 
@@ -87,14 +92,9 @@ class EditActivity : AppCompatActivity() {
 
         if(intent.hasExtra("Schedule")){
             var schedule = intent.getParcelableExtra<Schedule>("Schedule")
-
             val y = schedule.StartDay.substring(0,4)
             val m = schedule.StartDay.substring(4,6)
             val d = schedule.StartDay.substring(6,8)
-            val sh = schedule.StartTime.substring(0,2)
-            val sm = schedule.StartTime.substring(2,4)
-            val eh = schedule.EndTime.substring(0,2)
-            val em = schedule.EndTime.substring(2,4)
 
             syear = Integer.parseInt(y)
             eyear = Integer.parseInt(y)
@@ -102,16 +102,24 @@ class EditActivity : AppCompatActivity() {
             emonth = Integer.parseInt(m)
             sday = Integer.parseInt(d)
             eday = Integer.parseInt(d)
-            shour = Integer.parseInt(sh)
-            sminute = Integer.parseInt(sm)
-            ehour = Integer.parseInt(eh)
-            eminute = Integer.parseInt(em)
+            colorIndex = schedule.ColorIndex
+            preScheduleKey = schedule.key
+
+            if(schedule.StartTime.length > 1){
+                val sh = schedule.StartTime.substring(0,2)
+                val sm = schedule.StartTime.substring(2,4)
+                val eh = schedule.EndTime.substring(0,2)
+                val em = schedule.EndTime.substring(2,4)
+                shour = Integer.parseInt(sh)
+                sminute = Integer.parseInt(sm)
+                ehour = Integer.parseInt(eh)
+                eminute = Integer.parseInt(em)
+            }
+
 
             tvEditTitle.setText(schedule.Title)
             ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[schedule.ColorIndex])
             edtMemo.setText(schedule.Content)
-
-            Log.d("key",Firebase.database.getReference(uid).child("Schedule").child("-MOeF-aCm5XNB9CWDJ3w").key)
         }
 
         tvStartDate.text = "${smonth}월 ${sday}일"

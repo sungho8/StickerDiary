@@ -49,11 +49,10 @@ class ScheduleDialog : DialogFragment(){
                     day = "0" + day
 
                 val seday = year.toString() + month + day
-                val schedule = Schedule(0,seday, seday, "", "",  "", "")
+                val schedule = Schedule("",0,seday, seday, "", "",  "", "")
                 nextIntent.putExtra("Schedule", schedule)
                 nextIntent.putExtra("uid", uid)
                 startActivity(nextIntent)
-
             }
         }
     }

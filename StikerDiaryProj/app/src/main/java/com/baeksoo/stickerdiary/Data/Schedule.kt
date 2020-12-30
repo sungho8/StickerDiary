@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Schedule(): Parcelable {
+    var key : String = ""
     var isStart : Boolean = false
     var ColorIndex : Int = 0
     var StartDay : String = ""
@@ -14,6 +15,7 @@ class Schedule(): Parcelable {
     var Content: String = ""
 
     constructor(parcel: Parcel) : this() {
+        key = parcel.readString()
         ColorIndex = parcel.readInt()
         StartDay = parcel.readString()
         EndDay = parcel.readString()
@@ -23,8 +25,9 @@ class Schedule(): Parcelable {
         Content = parcel.readString()
     }
 
-    constructor(ColorIndex : Int, StartDay : String, EndDay : String, StartTime : String, EndTime : String,
+    constructor(key : String ,ColorIndex : Int, StartDay : String, EndDay : String, StartTime : String, EndTime : String,
                 Title : String,  Content: String) : this(){
+        this.key = key
         this.ColorIndex = ColorIndex
         this.StartDay = StartDay
         this.EndDay = EndDay
@@ -35,12 +38,13 @@ class Schedule(): Parcelable {
     }
 
     fun copy(isStart : Boolean) : Schedule {
-        val newSchedule = Schedule(this.ColorIndex,this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
+        val newSchedule = Schedule(this.key, this.ColorIndex,this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
         newSchedule.isStart = isStart
         return newSchedule
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(key)
         parcel.writeInt(ColorIndex)
         parcel.writeString(StartDay)
         parcel.writeString(EndDay)

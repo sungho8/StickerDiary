@@ -59,6 +59,13 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
                 }
             }
 
+            // 일요일 빨갛게
+            if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
+            // 오늘 구분선
+            if(isToday(holder)){
+                holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
+            }
+
             // 아이템 클릭 리스너
             holder.itemView.setOnClickListener {
                 val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist,uid)
@@ -73,15 +80,6 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
 
                 dialog.show(mainActivity.supportFragmentManager,dialog.tag)
             }
-        }
-
-        // 일요일 빨갛게
-        if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
-        if(isToday(holder)){
-            Log.d("wtoday","${year} ${month} ${holder.day.text}")
-
-            // 구분선
-            holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
         }
     }
 
