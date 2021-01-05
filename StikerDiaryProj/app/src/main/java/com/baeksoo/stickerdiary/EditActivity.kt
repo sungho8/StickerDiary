@@ -3,12 +3,15 @@ package com.baeksoo.stickerdiary
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.example.stickerdiary.StikerBottomSheet
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
+
 
 class EditActivity : AppCompatActivity() {
     private var cal = Calendar.getInstance()
@@ -37,9 +40,10 @@ class EditActivity : AppCompatActivity() {
 
         initView()
 
-//        ivSticker.setOnClickListener {
-//            val bottomSheet = StikerBottomSheet(supportFragmentManager)
-//            bottomSheet.show(supportFragmentManager, bottomSheet.tag) }
+        tvStiker.setOnClickListener {
+            val bottomSheet = StikerBottomSheet()
+            bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+        }
 
         ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[0])
         btnColor.setOnClickListener {

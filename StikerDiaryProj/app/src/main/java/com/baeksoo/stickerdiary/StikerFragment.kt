@@ -14,8 +14,7 @@ class StikerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val view =inflater.inflate(R.layout.fragment_tab, container, false)
+        val view = inflater.inflate(R.layout.fragment_tab, container, false)
         view.tvText.text = name
 
         return view

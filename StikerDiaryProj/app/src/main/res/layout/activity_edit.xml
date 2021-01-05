@@ -41,11 +41,36 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btnStiker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnColor"
+        android:layout_marginVertical="20dp"
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/ivStiker"
+            android:src="@drawable/circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:clickable="true"
+            android:id="@+id/tvStiker"
+            android:text="스티커 선택"
+            android:textSize="15dp"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/viewStart"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnColor"
+        android:layout_below="@+id/btnStiker"
         android:layout_marginVertical="20dp">
         <TextView
             android:id="@+id/tvStart"
