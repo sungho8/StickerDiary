@@ -4,11 +4,13 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.baeksoo.stickerdiary.Data.Schedule
 import com.example.stickerdiary.StikerBottomSheet
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_edit.*
 import java.util.*
 
@@ -31,10 +33,11 @@ class EditActivity : AppCompatActivity() {
     var eminute = cal.get(Calendar.MINUTE)
 
     var colorIndex = 0
+    var preScheduleKey = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.AppTheme2)
+        setTheme(MySharedReferences.prefs.getThemeId())
         setContentView(R.layout.activity_edit)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
@@ -45,7 +48,6 @@ class EditActivity : AppCompatActivity() {
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 
-        ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[0])
         btnColor.setOnClickListener {
             val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
                 .setColorImage(ivColor)
@@ -57,7 +59,6 @@ class EditActivity : AppCompatActivity() {
             dialog.show(this.supportFragmentManager,dialog.tag)
         }
 
-
         btnOK.setOnClickListener{
             val startday = transformDay(syear,smonth,sday)
             val endday =transformDay(eyear,emonth,eday)
@@ -67,12 +68,17 @@ class EditActivity : AppCompatActivity() {
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
 
-            val schedule = Schedule(colorIndex,startday,endday,starttime,endtime,title,content)
-            FirebaseController(uid).UploadSchedule(schedule)
+            val schedule = Schedule("", colorIndex, startday, endday, starttime, endtime, title, content)
+
+            // key값이 존재한다면 일정 업데이트, 아니면 새로운 일정
+            if(preScheduleKey.length > 1)
+                FirebaseController(uid).UpdateSchedule(schedule)
+            else
+                FirebaseController(uid).UploadSchedule(schedule)
 
             val nextIntent = Intent(this, MainActivity::class.java)
-            nextIntent.putExtra("uid",uid);
-            nextIntent.putExtra("date",startday)
+            nextIntent.putExtra("uid", uid);
+            nextIntent.putExtra("date", startday)
             startActivity(nextIntent)
         }
 
@@ -89,7 +95,6 @@ class EditActivity : AppCompatActivity() {
 
         if(intent.hasExtra("Schedule")){
             var schedule = intent.getParcelableExtra<Schedule>("Schedule")
-
             val y = schedule.StartDay.substring(0,4)
             val m = schedule.StartDay.substring(4,6)
             val d = schedule.StartDay.substring(6,8)
@@ -100,9 +105,26 @@ class EditActivity : AppCompatActivity() {
             emonth = Integer.parseInt(m)
             sday = Integer.parseInt(d)
             eday = Integer.parseInt(d)
-        }else{
+            colorIndex = schedule.ColorIndex
+            preScheduleKey = schedule.key
 
+            if(schedule.StartTime.length > 1){
+                val sh = schedule.StartTime.substring(0,2)
+                val sm = schedule.StartTime.substring(2,4)
+                val eh = schedule.EndTime.substring(0,2)
+                val em = schedule.EndTime.substring(2,4)
+                shour = Integer.parseInt(sh)
+                sminute = Integer.parseInt(sm)
+                ehour = Integer.parseInt(eh)
+                eminute = Integer.parseInt(em)
+            }
+
+
+            tvEditTitle.setText(schedule.Title)
+            ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[schedule.ColorIndex])
+            edtMemo.setText(schedule.Content)
         }
+
         tvStartDate.text = "${smonth}월 ${sday}일"
         tvStartTime.text = "${shour}시 ${sminute}분"
         tvEndDate.text = "${smonth}월 ${sday}일"
@@ -169,7 +191,6 @@ class EditActivity : AppCompatActivity() {
 
         return yy + mm + dd
     }
-
     fun transformTime(h : Int, m : Int) : String{
         var hh = "" + h;
         var mm = "" + m;

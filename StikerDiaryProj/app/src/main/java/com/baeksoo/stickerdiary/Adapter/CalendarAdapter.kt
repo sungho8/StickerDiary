@@ -1,12 +1,20 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.*
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
+import kotlinx.android.synthetic.main.calendar.view.*
+import kotlinx.android.synthetic.main.cell.view.*
+import java.util.*
 import kotlin.collections.ArrayList
 
 // 생성자에서 리스트 받아옴
@@ -28,8 +36,9 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         val day = Integer.parseInt(holder.day.text.toString())
 
         // 간격 설정
-        val layoutParams = holder.itemView.layoutParams
-        //layoutParams.height = 250
+//        val layoutParams = holder.itemView.layoutParams
+//        //layoutParams.height = 250
+
         holder.itemView.requestLayout()
 
         // 현재 달이 아닌 날짜는 흐리게 표시
@@ -38,6 +47,8 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         }else if(position >= 28 && Integer.parseInt(holder.day.text.toString()) < 15){
             holder.day.alpha = 0.3f
         }else{
+            holder.day.alpha = 1f
+
             // 흐리지 않은날짜는 존재하는 일정스티커와 선을 띄운다.
             val cc = CalendarCalculator()
             val total = cc.indexDay(year, month, day).toInt()
@@ -48,25 +59,38 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
                 }
             }
 
-            holder.day.alpha = 1f
-        }
+            // 일요일 빨갛게
+            if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
+            // 오늘 구분선
+            if(isToday(holder)){
+                holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
+            }
 
-        // 일요일 빨갛게
-        if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
+            // 아이템 클릭 리스너
+            holder.itemView.setOnClickListener {
+                val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist,uid)
 
-        // 아이템 클릭 리스너
-        holder.itemView.setOnClickListener {
-            val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist)
+                val dialog = ScheduleDialog.CustomDialogBuilder()
+                    .setContext(context)
+                    .setuid(uid)
+                    .setYear(year)
+                    .setMonth(month.toString())
+                    .setDay(holder.day.text.toString())
+                    .setScheduleList(sadapter).create()
 
-            val dialog = ScheduleDialog.CustomDialogBuilder()
-                .setContext(context)
-                .setuid(uid)
-                .setYear(year)
-                .setMonth(month.toString())
-                .setDay(holder.day.text.toString())
-                .setScheduleList(sadapter).create()
-
-            dialog.show(mainActivity.supportFragmentManager,dialog.tag)
+                dialog.show(mainActivity.supportFragmentManager,dialog.tag)
+            }
         }
     }
+
+    fun isToday(holder: CalendarViewHolder) : Boolean {
+        if(Calendar.getInstance().get(Calendar.YEAR) == year && Calendar.getInstance().get(Calendar.MONTH) + 1 == month &&
+            Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == Integer.parseInt(holder.day.text.toString()))
+            return true
+
+        return false
+    }
+
+
+
 }

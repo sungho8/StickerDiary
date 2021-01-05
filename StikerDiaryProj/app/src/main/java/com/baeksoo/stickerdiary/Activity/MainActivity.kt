@@ -1,6 +1,8 @@
 package com.baeksoo.stickerdiary
 
+import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.AppTheme2)
+        setTheme(MySharedReferences.prefs.getThemeId())
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
         setContentView(R.layout.activity_main)
 
@@ -60,16 +62,10 @@ class MainActivity : AppCompatActivity() {
 
         ReadAllSchedule()
 
-        ivmColor.setOnClickListener{
-            val dialog : ColorDialog = ColorDialog.ColorDialogBuilder()
-                .setColorImage(ivmColor)
-                .create()
-
-            dialog.setOnColorClickedListener{ content ->
-                mColorIndex = content
-                Log.d("color is : ",mColorIndex.toString())
-            }
-            dialog.show(this.supportFragmentManager,dialog.tag)
+        ivmOption.setOnClickListener{
+            val nextIntent = Intent(this,OptionActivity::class.java)
+            nextIntent.putExtra("uid",uid)
+            startActivity(nextIntent)
         }
     }
 
@@ -81,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 for (snapshot in data.children) {
                     val schedule = snapshot.getValue(Schedule :: class.java)
                     if (schedule != null) {
+                        schedule.key = snapshot.key.toString()
                         scheduleList.add(schedule)
                     }
                 }
@@ -135,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             val cc = CalendarCalculator()
             val stotal = (cc.indexDay( syear, smonth, sday)).toInt()
             val etotal = (cc.indexDay( eyear, emonth, eday)).toInt()
-            Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
+            //Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
             var scheduleLayer = 0
             for(i in stotal .. etotal){
                 var isStart = false
@@ -207,8 +204,6 @@ class MainActivity : AppCompatActivity() {
         {
             val y = 12 * (Integer.parseInt(intent.getStringExtra("date").substring(0,4)) - year)
             val m = Integer.parseInt(intent.getStringExtra("date").substring(4,6)) - (month + 1)
-
-            Log.d("dddddd", "${y}  + ${m}")
 
             pager.setCurrentItem(view_list.count() / 2 + month + (y + m))
         }
