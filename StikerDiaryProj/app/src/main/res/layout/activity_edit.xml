@@ -1,155 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorBackground"
-    android:padding="50dp"
     tools:context="com.baeksoo.stickerdiary.EditActivity">
-
-    <EditText
-        android:id="@+id/tvEditTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="?attr/colorMain"
-        android:hint="제목"
-        android:textSize="20dp"/>
-
-    <LinearLayout
-        android:id="@+id/btnColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEditTitle"
-        android:layout_marginVertical="20dp"
-        android:orientation="horizontal"
-        android:clickable="true">
-        <ImageView
-            android:id="@+id/ivColor"
-            android:src="@drawable/circle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-        <TextView
-            android:text="색상 변경"
-            android:textSize="15dp"
-            android:layout_marginLeft="30dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/viewStart"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnColor"
-        android:layout_marginVertical="20dp">
-        <TextView
-            android:id="@+id/tvStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="시작"
-            android:textColor="?attr/colorMain"
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/tvStartDate"
-            android:clickable="true"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10월 21일"
-            android:textColor="?attr/colorMain"
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/tvStartTime"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="21 : 13"
-            android:textSize="20dp"
-            android:textColor="?attr/colorMain"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/viewEnd"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewStart"
-        android:layout_marginVertical="20dp">
-        <TextView
-            android:id="@+id/tvEnd"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="종료"
-            android:textColor="?attr/colorMain"
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/tvEndDate"
-            android:clickable="true"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10월 21일"
-            android:textColor="?attr/colorMain"
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/tvEndTime"
-            android:clickable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="21 : 13"
-            android:textSize="20dp"
-            android:textColor="?attr/colorMain"/>
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edtMemo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewEnd"
-        android:layout_marginVertical="20dp"
-        android:backgroundTint="?attr/colorMain"
-        android:hint="내용"
-        android:textSize="20dp"/>
-
     <LinearLayout
         android:id="@+id/viewBtn"
+        android:background="?attr/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edtMemo"
         android:layout_marginVertical="20dp">
         <ImageButton
-            android:id="@+id/btnOK"
-            android:src="@drawable/button_ok"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:background="#ffffff"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:text="확인"/>
-
-        <ImageButton
             android:id="@+id/btnCancel"
-            android:src="@drawable/button_cancle"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
+            android:src="@drawable/btn_cancle"
+            android:text="확인"
             android:background="#ffffff"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:text="일정"
+            android:textStyle="bold"
+            android:textSize="18dp"
             android:layout_weight="1"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="확인"/>
+            android:layout_gravity="center"/>
+        <ImageButton
+            android:id="@+id/btnOK"
+            android:src="@drawable/btn_ok"
+            android:text="확인"
+            android:background="#ffffff"
+            android:scaleType="fitXY"
+            android:padding="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
+
+    <RelativeLayout
+        android:paddingHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/viewBtn"
+        android:background="?attr/colorBackground">
+        <EditText
+            android:id="@+id/tvEditTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="?attr/colorMain"
+            android:hint="제목"
+            android:textSize="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/viewSticker"
+            android:orientation="horizontal"
+            android:layout_below="@+id/tvEditTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/teststicker2"
+                    android:layout_gravity="center"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"/>
+                <TextView
+                    android:text="스티커"
+                    android:textStyle="bold"
+                    android:textSize="13dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/image_picture"
+                    android:layout_gravity="center"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"/>
+                <TextView
+                    android:text="이미지"
+                    android:textStyle="bold"
+                    android:textSize="13dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewSticker"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal"
+            android:clickable="true">
+            <ImageView
+                android:id="@+id/ivColor"
+                android:src="@drawable/circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:text="색상 변경"
+                android:textSize="15dp"
+                android:layout_marginLeft="30dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewStart"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnColor"
+            android:layout_marginVertical="20dp">
+            <TextView
+                android:id="@+id/tvStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="시작"
+                android:textStyle="bold"
+                android:textColor="?attr/colorMain"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/tvStartDate"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10월 21일"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/tvStartTime"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21 : 13"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewEnd"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewStart"
+            android:layout_marginVertical="20dp">
+            <TextView
+                android:id="@+id/tvEnd"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="종료"
+                android:textStyle="bold"
+                android:textColor="?attr/colorMain"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10월 21일"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/tvEndTime"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21 : 13"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edtMemo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewEnd"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="?attr/colorMain"
+            android:hint="내용"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+
+
 </RelativeLayout>

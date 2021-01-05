@@ -79,7 +79,7 @@
             android:layout_height="wrap_content" />
         <RadioButton
             android:id="@+id/radio7"
-            android:text="검정"
+            android:text="고구마"
             android:gravity="right|center_vertical"
             android:buttonTint="@color/colorTheme7"
             android:layout_marginVertical="5dp"

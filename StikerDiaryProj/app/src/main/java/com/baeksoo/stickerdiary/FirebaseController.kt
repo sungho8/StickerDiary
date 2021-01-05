@@ -22,12 +22,16 @@ class FirebaseController(var userid : String){
 
     // 데이터 수정
     fun UpdateSchedule(schedule : Schedule){
-        var dbRef = Firebase.database.getReference(userid).child("Schedule").child(schedule.key)
-        dbRef.removeValue()
-
-        dbRef = Firebase.database.getReference(userid).child("Schedule")
-        dbRef.push().setValue(schedule)
-
+//        Log.d("key uis ",schedule.key)
+//
+//        var dbRef = Firebase.database.getReference(userid).child("Schedule").child(schedule.key)
+//        dbRef.removeValue()
+//
+//        var dbRef2 = Firebase.database.getReference(userid).child("Schedule")
+//        dbRef2.push().setValue(schedule)
+        Log.d("sungho ", schedule.key)
+        RemoveSchedule(schedule.key)
+        UploadSchedule(schedule)
     }
 
     // 데이터 삭제
