@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     private val countCalendar = 10  // 현재날짜로부터 전후 몇년의 달력을 만들지
 
-    private var mColorIndex = 0
     private var uid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         setTheme(MySharedReferences.prefs.getThemeId())
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
         setContentView(R.layout.activity_main)
-
 
         if(intent.hasExtra("uid"))
             uid = intent.getStringExtra("uid")

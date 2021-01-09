@@ -13,11 +13,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import com.baeksoo.stickerdiary.*
 import com.baeksoo.stickerdiary.Data.Schedule
-import com.baeksoo.stickerdiary.EditActivity
-import com.baeksoo.stickerdiary.FirebaseController
-import com.baeksoo.stickerdiary.MainActivity
-import com.baeksoo.stickerdiary.R
+import kotlinx.android.synthetic.main.activity_edit.*
 
 
 class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Schedule>, uid : String) : ArrayAdapter<Schedule>(context,resource,item){
@@ -57,11 +55,7 @@ class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Sched
                 mContext.startActivity(nextIntent)
             }
 
-            // 색 변경
-            viewHolder.colorIv.setOnClickListener {
-
-            }
-
+            // 일정 삭제 버튼
             viewHolder.removeIv.setOnClickListener{
                 var builder = AlertDialog.Builder(mContext)
                 builder.setTitle("일정을 삭제 할까요?")

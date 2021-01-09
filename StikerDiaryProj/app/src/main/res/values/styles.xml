@@ -51,8 +51,8 @@
     </style>
 
     <style name="Theme7" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorMain">#ffffff</item>
-        <item name="colorBackground">#000000</item>
+        <item name="colorMain">#AD649D</item>
+        <item name="colorBackground">#ffffff</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

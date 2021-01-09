@@ -4,6 +4,7 @@
 
     <color name="colorWeekend">#ff1200</color>
     <color name="colorLineTxt">#ffffff</color>
+    <color name="colorBtn">#404040</color>
 
     <color name="colorSchedule0">#C7B5FF</color>
     <color name="colorSchedule1">#E91E63</color>
@@ -40,5 +41,5 @@
     <color name="colorTheme4">#F46D70</color>
     <color name="colorTheme5">#8CD6E3</color>
     <color name="colorTheme6">#F6D678</color>
-    <color name="colorTheme7">#000000</color>
+    <color name="colorTheme7">#AD649D</color>
 </resources>

@@ -67,10 +67,14 @@ class EditActivity : AppCompatActivity() {
             val schedule = Schedule("", colorIndex, startday, endday, starttime, endtime, title, content)
 
             // key값이 존재한다면 일정 업데이트, 아니면 새로운 일정
-            if(preScheduleKey.length > 1)
+            if(preScheduleKey.length > 1){
+                schedule.key = preScheduleKey
                 FirebaseController(uid).UpdateSchedule(schedule)
-            else
+            }
+            else{
                 FirebaseController(uid).UploadSchedule(schedule)
+            }
+
 
             val nextIntent = Intent(this, MainActivity::class.java)
             nextIntent.putExtra("uid", uid);
