@@ -1,17 +1,12 @@
-package com.example.stickerdiary
+package com.baeksoo.stickerdiary
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.FragmentManager
 import com.baeksoo.stickerdiary.R
 import com.baeksoo.stickerdiary.StikerFragment
-import com.baeksoo.stickerdiary.StikerViewPagerAdapter
-import com.google.android.gms.common.internal.SignInButtonCreator.createView
+import com.baeksoo.stickerdiary.Adapter.StikerViewPagerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_stiker.*
 
@@ -38,13 +33,15 @@ class StikerBottomSheet() : BottomSheetDialogFragment() {
 
     private fun initViewPager(){
         val searchFragment = StikerFragment()
-        searchFragment.name = "찾기 창"
-        val cameraFragment = StikerFragment()
-        cameraFragment.name = "사진 창"
-        val callFragment = StikerFragment()
-        callFragment.name = "전화 창"
 
-        val adapter = StikerViewPagerAdapter(childFragmentManager) // PageAdapter 생성
+        val cameraFragment = StikerFragment()
+
+        val callFragment = StikerFragment()
+
+
+        val adapter = StikerViewPagerAdapter(
+            childFragmentManager
+        ) // PagerAdapter 생성
         adapter.addItems(searchFragment)
         adapter.addItems(cameraFragment)
         adapter.addItems(callFragment)
