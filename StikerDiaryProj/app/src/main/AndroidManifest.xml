@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.example.stickerdiary.StikerBottomSheet"></activity>
+        <activity android:name=".StikerBottomSheet"></activity>
         <activity android:name=".OptionActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
