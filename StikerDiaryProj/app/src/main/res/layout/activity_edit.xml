@@ -73,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/btnSticker"
                     android:src="@drawable/teststicker2"
                     android:layout_gravity="center"
                     android:layout_width="80dp"

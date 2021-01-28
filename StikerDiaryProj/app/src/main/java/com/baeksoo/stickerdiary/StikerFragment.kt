@@ -9,16 +9,11 @@ import kotlinx.android.synthetic.main.fragment_tab.view.*
 
 class StikerFragment : Fragment() {
     var name = ""
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_tab, container, false)
-        view.tvText.text = name
-
         return view
     }
-
-
 }
