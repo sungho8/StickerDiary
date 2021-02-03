@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
+import com.baeksoo.stickerdiary.MySharedReferences
 import com.baeksoo.stickerdiary.R
 
 //생성자 지정 , 상위클래스 view 넘겨줌.  super(calendarView)
@@ -44,6 +46,14 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
     fun onBindView(position: Int, list: ArrayList<Data>) {
         // 데이터를 화면에 그리기.
         day.text = list[position].day
+    }
+
+    fun showSticker(stickerData : StickerData?){
+        var pakName = MySharedReferences.ApplicationContext().packageName
+        var resName = stickerData?.sticker
+
+        var imgRes = MySharedReferences.ApplicationContext().resources.getIdentifier(resName, "drawable", pakName)
+        sticker.setImageResource(imgRes)
     }
 
     fun showSchedule(context : Context, schedule: Schedule?, i : Int){

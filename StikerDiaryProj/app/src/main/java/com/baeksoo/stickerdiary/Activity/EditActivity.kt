@@ -4,16 +4,24 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.baeksoo.stickerdiary.Adapter.StickerViewHolder
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
 import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.sticker.*
 import java.util.*
 
 
 class EditActivity : AppCompatActivity() {
     private var cal = Calendar.getInstance()
 
+    lateinit var preSticker : StickerData
+    lateinit var curSticker : StickerData
     var uid = ""
 
     var syear = cal.get(Calendar.YEAR)
@@ -56,6 +64,13 @@ class EditActivity : AppCompatActivity() {
         }
 
         btnOK.setOnClickListener{
+            // Sticker
+            if(curSticker != null && !curSticker.sticker.equals("none")){
+                curSticker.day = transformDay(syear,smonth,sday)
+                FirebaseController(uid).UploadSticker(curSticker)
+            }
+
+            // Schedule
             val startday = transformDay(syear,smonth,sday)
             val endday =transformDay(eyear,emonth,eday)
             val starttime = transformTime(shour,sminute)
@@ -75,7 +90,6 @@ class EditActivity : AppCompatActivity() {
                 FirebaseController(uid).UploadSchedule(schedule)
             }
 
-
             val nextIntent = Intent(this, MainActivity::class.java)
             nextIntent.putExtra("uid", uid);
             nextIntent.putExtra("date", startday)
@@ -89,6 +103,8 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun initView(){
+        curSticker = StickerData("none","")
+
         if(intent.hasExtra("uid")){
             uid = intent.getStringExtra("uid")
         }
@@ -201,5 +217,12 @@ class EditActivity : AppCompatActivity() {
             mm = "0" + mm
 
         return hh + mm
+    }
+    fun receiveData(stickerData : StickerData){
+        curSticker = stickerData
+
+        var pakName = MySharedReferences.ApplicationContext().packageName
+        var imgRes = MySharedReferences.ApplicationContext().resources.getIdentifier(curSticker.sticker, "drawable", pakName)
+        btnSticker.setImageResource(imgRes)
     }
 }

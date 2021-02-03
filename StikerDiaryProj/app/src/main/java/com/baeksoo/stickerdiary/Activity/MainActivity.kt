@@ -17,6 +17,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.baeksoo.stickerdiary.Adapter.CalendarAdapter
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -42,8 +43,10 @@ class MainActivity : AppCompatActivity() {
     private var pageYear = year;
     private var pageMonth = month;
 
-    private var dateList = ArrayList<ArrayList<Schedule?>>()
+    private var scheduleDateList = ArrayList<ArrayList<Schedule?>>()
+    private var stickerDateList = ArrayList<StickerData?>()
     private var scheduleList = ArrayList<Schedule>()
+    private var stickerList = ArrayList<StickerData>()
 
     private val countCalendar = 10  // 현재날짜로부터 전후 몇년의 달력을 만들지
 
@@ -58,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         if(intent.hasExtra("uid"))
             uid = intent.getStringExtra("uid")
 
-        ReadAllSchedule()
+        ReadAllSticker()
 
         ivmOption.setOnClickListener{
             val nextIntent = Intent(this,OptionActivity::class.java)
@@ -67,10 +70,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun ReadAllSticker(){
+        val myRef = Firebase.database.getReference(uid).child("Sticker")
+
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(data : DataSnapshot) {
+                for(snapshot in data.children){
+                    val sticker = snapshot.getValue(StickerData :: class.java)
+                    if(sticker != null){
+                        stickerList.add(sticker)
+                        Log.d("sticker list ", "${sticker.sticker} , ${sticker.day}")
+                    }
+                }
+                ReadAllSchedule()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Read All Sticker Error", "스티커 불러오기 실패")
+            }
+        })
+    }
+
     fun ReadAllSchedule(){
         val myRef = Firebase.database.getReference(uid).child("Schedule")
 
-        myRef.addValueEventListener(object  : ValueEventListener {
+        myRef.addListenerForSingleValueEvent(object  : ValueEventListener {
             override fun onDataChange(data: DataSnapshot) {
                 for (snapshot in data.children) {
                     val schedule = snapshot.getValue(Schedule :: class.java)
@@ -79,19 +103,20 @@ class MainActivity : AppCompatActivity() {
                         scheduleList.add(schedule)
                     }
                 }
-                initDateList()
+                initscheduleDateList()
                 arrangeSchedule()
+                arrangeSticker()
                 makeCalendar()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e("Read All Schedule Error", "일정 불러오기 실패")
             }
         })
     }
 
     // 각 일정들의 막대들을 배치하기위해 초기화 작업
-    fun initDateList(){
+    fun initscheduleDateList(){
         // year
         for(i in -1 * countCalendar .. countCalendar){
             var monthArr = arrayOf(31,28,31,30,31,30,31,31,30,31,30,31)
@@ -107,12 +132,12 @@ class MainActivity : AppCompatActivity() {
                 // day
                 for(k in 1 .. monthArr[m]){
                     var temp = ArrayList<Schedule?>()
-                    dateList.add(temp)
+                    scheduleDateList.add(temp)
+                    stickerDateList.add(null)
                 }
             }
         }
     }
-
     // 각 일정의 막대들을 알맞게 배치한다.
     fun arrangeSchedule(){
         // 1. 시작날짜순으로 정렬
@@ -138,34 +163,50 @@ class MainActivity : AppCompatActivity() {
                     scheduleLayer = getScheduleLayer(i)
                     isStart = true
                 }else{
-                    while(scheduleLayer > dateList[i].size){
-                        dateList[i].add(null)
+                    while(scheduleLayer > scheduleDateList[i].size){
+                        scheduleDateList[i].add(null)
                     }
                 }
 
                 val temp = schedule.copy(isStart)
-                dateList[i].add(scheduleLayer, temp)
+                scheduleDateList[i].add(scheduleLayer, temp)
             }
         }
     }
-
     fun getScheduleLayer(index : Int) : Int{
         var count = 0
-        for(i in 0 until dateList[index].size){
-            if(dateList[index][i] != null){
+        for(i in 0 until scheduleDateList[index].size){
+            if(scheduleDateList[index][i] != null){
                 count ++
             }
         }
 
         if(count >= 2)
-            return dateList[index].size
+            return scheduleDateList[index].size
 
-        for(i in 0 until dateList[index].size){
-            if(dateList[index][i] == null){
+        for(i in 0 until scheduleDateList[index].size){
+            if(scheduleDateList[index][i] == null){
                 return i
             }
         }
-        return dateList[index].size
+        return scheduleDateList[index].size
+    }
+
+    // 각 스티커를 알맞게 배치한다.
+    fun arrangeSticker(){
+        val sortedList = ArrayList(stickerList.sortedBy { it.day })
+        for(sticker in sortedList){
+            var syear = Integer.parseInt(sticker.day.substring(0,4))
+            var smonth = Integer.parseInt(sticker.day.substring(4,6))
+            var sday = Integer.parseInt(sticker.day.substring(6,8))
+
+            val cc = CalendarCalculator()
+            val total = cc.indexDay(syear, smonth, sday).toInt()
+
+            stickerDateList[total] = sticker
+        }
+
+
     }
 
     fun makeCalendar(){
@@ -181,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                 m = (12 + i  % 12) % 12
             }
             currentView.recyclerView.adapter = CalendarAdapter(this, this, uid , dateCalculator.setData(y, m),
-                dateList, y, m + 1)
+                scheduleDateList,stickerDateList, y, m + 1)
 
             // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)

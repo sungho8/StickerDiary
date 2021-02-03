@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.*
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.cell.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 // 생성자에서 리스트 받아옴
-class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val uid : String , val list: ArrayList<Data>, val dateList : ArrayList<ArrayList<Schedule?>>,
-                      val year : Int, val month : Int) : RecyclerView.Adapter<CalendarViewHolder>(){
+class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val uid : String , val list: ArrayList<Data>, val scheduleDateList : ArrayList<ArrayList<Schedule?>>,
+                      val stickerDateList : ArrayList<StickerData?>,val year : Int, val month : Int) : RecyclerView.Adapter<CalendarViewHolder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CalendarViewHolder {
         // 팩토리함수를 이용한 뷰홀더 생성.
         return CalendarViewHolder.newInstance(viewGroup)
@@ -52,19 +53,20 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
             // 흐리지 않은날짜는 존재하는 일정스티커와 선을 띄운다.
             val cc = CalendarCalculator()
             val total = cc.indexDay(year, month, day).toInt()
-            for(i in 0 until dateList[total].size){
-                if(dateList[total][i] != null){
-                    holder.showSchedule(context,dateList[total][i], i)
-                    slist.add(dateList[total][i]!!)
+            for(i in 0 until scheduleDateList[total].size){
+                if(scheduleDateList[total][i] != null){
+                    holder.showSchedule(context,scheduleDateList[total][i], i)
+                    slist.add(scheduleDateList[total][i]!!)
                 }
             }
-
-            // 일요일 빨갛게
-            if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
-            // 오늘 구분선
-            if(isToday(holder)){
-                holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
+            if(stickerDateList[total] != null){
+                holder.showSticker(stickerDateList[total])
             }
+
+            // 일요일 빨갛게, 오늘 구분선
+            if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
+            if(isToday(holder)) holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
+
 
             // 아이템 클릭 리스너
             holder.itemView.setOnClickListener {

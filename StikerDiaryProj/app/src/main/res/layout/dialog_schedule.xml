@@ -21,7 +21,7 @@
             android:textSize="25dp"/>
         <ImageView
             android:id="@+id/csticker"
-            android:src="@drawable/teststicker"
+            android:src="@drawable/none"
             android:scaleType="centerInside"
             android:layout_margin="20dp"
             android:layout_gravity="center"
