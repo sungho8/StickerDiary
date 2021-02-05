@@ -1,18 +1,15 @@
 package com.baeksoo.stickerdiary
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.baeksoo.stickerdiary.Adapter.StickerAdapter
 import com.baeksoo.stickerdiary.Data.StickerData
-import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.fragment_tab.view.*
 
-class StikerFragment(val index : Int, val count : Int) : Fragment() {
+class StikerFragment(val index: Int, val count: Int, val scheduleDialog : ScheduleDialog?) : Fragment() {
     var name = ""
 
     override fun onCreateView(
@@ -22,17 +19,25 @@ class StikerFragment(val index : Int, val count : Int) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_tab, container, false)
         var list : ArrayList<StickerData> = ArrayList()
 
-        list.add(StickerData("none",""))   // 스티커 취소용
+        list.add(StickerData("","none", ""))   // 스티커 취소용
         for(i in 0 until count)
-            list.add(StickerData("sticker"+index+"_"+i,""))
+            list.add(StickerData("","sticker" + index + "_" + i, ""))
 
         val adapter = StickerAdapter(list)
         // adapter listener
-        adapter.setItemClickListener(object : StickerAdapter.OnItemClickListener{
+        adapter.setItemClickListener(object : StickerAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val sticker = list[position]
-                val editActivity = activity as EditActivity
-                editActivity.receiveData(sticker)
+
+                if (scheduleDialog == null) {
+                    val editActivity = activity as EditActivity
+                    editActivity.receiveData(sticker)
+                } else {
+                    val args = Bundle()
+                    args.putString("sticker", sticker.sticker)
+                    val dialogFragment = scheduleDialog
+                    dialogFragment.recieveData(sticker)
+                }
             }
         })
 

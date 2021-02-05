@@ -38,7 +38,7 @@ class Schedule(): Parcelable {
     }
 
     fun copy(isStart : Boolean) : Schedule {
-        val newSchedule = Schedule(this.key, this.ColorIndex,this.StartDay,this.EndDay,this.StartTime,this.EndTime,this.Title,this.Content)
+        val newSchedule = Schedule(this.key, this.ColorIndex, this.StartDay, this.EndDay, this.StartTime, this.EndTime, this.Title, this.Content)
         newSchedule.isStart = isStart
         return newSchedule
     }

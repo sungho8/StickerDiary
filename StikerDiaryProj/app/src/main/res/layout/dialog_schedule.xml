@@ -20,7 +20,7 @@
             android:textColor="?attr/colorMain"
             android:textSize="25dp"/>
         <ImageView
-            android:id="@+id/csticker"
+            android:id="@+id/ivSticker"
             android:src="@drawable/none"
             android:scaleType="centerInside"
             android:layout_margin="20dp"

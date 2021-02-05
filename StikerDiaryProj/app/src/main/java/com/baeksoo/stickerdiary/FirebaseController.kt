@@ -20,6 +20,18 @@ class FirebaseController(var userid : String){
         dbRef.child("Sticker").push().setValue(sticker)
     }
 
+    // 스티커 데이터 수정
+    fun UpdateSticker(key : String,sticker : StickerData){
+        RemoveSticker(key)
+        UploadSticker(sticker)
+    }
+
+    // 스티커 데이터 삭제
+    fun RemoveSticker(key : String){
+        val dbRef = Firebase.database.getReference(userid).child("Sticker").child(key)
+        dbRef.removeValue()
+    }
+
     // 스케쥴 데이터 쓰기
     fun UploadSchedule(schedule: Schedule){
         val dbRef = Firebase.database.getReference(userid)

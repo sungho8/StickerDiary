@@ -56,7 +56,7 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
         sticker.setImageResource(imgRes)
     }
 
-    fun showSchedule(context : Context, schedule: Schedule?, i : Int){
+    fun showSchedule(schedule: Schedule?, i : Int){
         if (schedule == null)
             return
 

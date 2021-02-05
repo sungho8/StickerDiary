@@ -48,7 +48,7 @@ class EditActivity : AppCompatActivity() {
         initView()
 
         btnSticker.setOnClickListener {
-            val bottomSheet = StikerBottomSheet()
+            val bottomSheet = StikerBottomSheet(null)
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 
@@ -66,15 +66,15 @@ class EditActivity : AppCompatActivity() {
         btnOK.setOnClickListener{
             // Sticker
             if(curSticker != null && !curSticker.sticker.equals("none")){
-                curSticker.day = transformDay(syear,smonth,sday)
+                curSticker.day = CalendarCalculator().transformDay(syear,smonth,sday)
                 FirebaseController(uid).UploadSticker(curSticker)
             }
 
             // Schedule
-            val startday = transformDay(syear,smonth,sday)
-            val endday =transformDay(eyear,emonth,eday)
-            val starttime = transformTime(shour,sminute)
-            val endtime = transformTime(ehour,eminute)
+            val startday = CalendarCalculator().transformDay(syear,smonth,sday)
+            val endday = CalendarCalculator().transformDay(eyear,emonth,eday)
+            val starttime = CalendarCalculator().transformTime(shour,sminute)
+            val endtime = CalendarCalculator().transformTime(ehour,eminute)
 
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
@@ -103,7 +103,7 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun initView(){
-        curSticker = StickerData("none","")
+        curSticker = StickerData("","none","")
 
         if(intent.hasExtra("uid")){
             uid = intent.getStringExtra("uid")
@@ -134,7 +134,6 @@ class EditActivity : AppCompatActivity() {
                 ehour = Integer.parseInt(eh)
                 eminute = Integer.parseInt(em)
             }
-
 
             tvEditTitle.setText(schedule.Title)
             ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[schedule.ColorIndex])
@@ -195,29 +194,6 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-    fun transformDay(y : Int, m : Int, d : Int) : String{
-        var yy = "" + y
-        var mm = "" + m
-        var dd = "" + d
-
-        if(mm.length < 2)
-            mm = "0" + mm
-        if(dd.length < 2)
-            dd = "0" + dd
-
-        return yy + mm + dd
-    }
-    fun transformTime(h : Int, m : Int) : String{
-        var hh = "" + h;
-        var mm = "" + m;
-
-        if(hh.length < 2)
-            hh = "0" + hh
-        if(mm.length < 2)
-            mm = "0" + mm
-
-        return hh + mm
-    }
     fun receiveData(stickerData : StickerData){
         curSticker = stickerData
 

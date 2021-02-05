@@ -4,19 +4,23 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class StickerData () : Parcelable{
+    var key : String = ""
     var sticker : String = ""
     var day : String = ""
     constructor(parcel: Parcel) : this() {
+        key = parcel.readString()
         sticker = parcel.readString()
         day = parcel.readString()
     }
 
-    constructor(sticker : String, day : String) : this() {
+    constructor(key : String, sticker : String, day : String) : this() {
+        this.key = key
         this.sticker = sticker
         this.day = day
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(key)
         parcel.writeString(sticker)
         parcel.writeString(day)
     }

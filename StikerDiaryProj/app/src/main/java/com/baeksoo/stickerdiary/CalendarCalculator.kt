@@ -49,12 +49,38 @@ class CalendarCalculator{
         else
             monthArr[1] = 28
 
-        for(i in 0 .. m-1)
-            total += monthArr[i];
+        if(m > 1){
+            for(i in 0 .. m-1)
+                total += monthArr[i];
+        }
 
         total += d;
 
         return total;
+    }
+
+    fun transformDay(y : Int, m : Int, d : Int) : String{
+        var yy = "" + y
+        var mm = "" + m
+        var dd = "" + d
+
+        if(mm.length < 2)
+            mm = "0" + mm
+        if(dd.length < 2)
+            dd = "0" + dd
+
+        return yy + mm + dd
+    }
+    fun transformTime(h : Int, m : Int) : String{
+        var hh = "" + h;
+        var mm = "" + m;
+
+        if(hh.length < 2)
+            hh = "0" + hh
+        if(mm.length < 2)
+            mm = "0" + mm
+
+        return hh + mm
     }
 
 }

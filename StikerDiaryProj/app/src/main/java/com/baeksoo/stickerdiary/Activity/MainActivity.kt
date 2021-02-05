@@ -63,6 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         ReadAllSticker()
 
+
+
         ivmOption.setOnClickListener{
             val nextIntent = Intent(this,OptionActivity::class.java)
             nextIntent.putExtra("uid",uid)
@@ -78,8 +80,8 @@ class MainActivity : AppCompatActivity() {
                 for(snapshot in data.children){
                     val sticker = snapshot.getValue(StickerData :: class.java)
                     if(sticker != null){
+                        sticker.key = snapshot.key.toString()
                         stickerList.add(sticker)
-                        Log.d("sticker list ", "${sticker.sticker} , ${sticker.day}")
                     }
                 }
                 ReadAllSchedule()
@@ -103,10 +105,10 @@ class MainActivity : AppCompatActivity() {
                         scheduleList.add(schedule)
                     }
                 }
-                initscheduleDateList()
-                arrangeSchedule()
-                arrangeSticker()
-                makeCalendar()
+                initscheduleDateList()  // 날짜배열 생성
+                arrangeSchedule()       // 일정 정렬
+                arrangeSticker()        // 스티커 정렬
+                makeCalendar()          // calandar adapter 생성
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -205,8 +207,6 @@ class MainActivity : AppCompatActivity() {
 
             stickerDateList[total] = sticker
         }
-
-
     }
 
     fun makeCalendar(){

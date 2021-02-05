@@ -1,26 +1,34 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.baeksoo.stickerdiary.*
+import com.baeksoo.stickerdiary.CalendarCalculator
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
 import com.baeksoo.stickerdiary.Data.StickerData
-import kotlinx.android.synthetic.main.calendar.view.*
+import com.baeksoo.stickerdiary.MainActivity
+import com.baeksoo.stickerdiary.R
+import com.baeksoo.stickerdiary.ScheduleDialog
 import kotlinx.android.synthetic.main.cell.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 // 생성자에서 리스트 받아옴
-class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val uid : String , val list: ArrayList<Data>, val scheduleDateList : ArrayList<ArrayList<Schedule?>>,
-                      val stickerDateList : ArrayList<StickerData?>,val year : Int, val month : Int) : RecyclerView.Adapter<CalendarViewHolder>(){
+class CalendarAdapter(
+    val mainActivity: MainActivity,
+    val context: Context,
+    val uid: String,
+    val list: ArrayList<Data>,
+    val scheduleDateList: ArrayList<ArrayList<Schedule?>>,
+    val stickerDateList: ArrayList<StickerData?>,
+    val year: Int,
+    val month: Int
+) : RecyclerView.Adapter<CalendarViewHolder>(){
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): CalendarViewHolder {
         // 팩토리함수를 이용한 뷰홀더 생성.
         return CalendarViewHolder.newInstance(viewGroup)
@@ -30,7 +38,7 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
         return list.size
     }
 
-    override fun onBindViewHolder(holder : CalendarViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
         // 홀더에 정의된 함수로 뷰 그리기
         holder.onBindView(position, list)
         val slist : ArrayList<Schedule> = ArrayList()       // dialog에 리스트뷰 로 보내줄 일정
@@ -53,34 +61,47 @@ class CalendarAdapter(val mainActivity: MainActivity, val context : Context, val
             // 흐리지 않은날짜는 존재하는 일정스티커와 선을 띄운다.
             val cc = CalendarCalculator()
             val total = cc.indexDay(year, month, day).toInt()
+            var sticker = StickerData("","none", "")
+
             for(i in 0 until scheduleDateList[total].size){
+                Log.d("whatday", "(${year} , ${month} , ${day}) total : ${total}")
+                Log.d(
+                    "20210203",
+                    "(${2021} , ${2} , ${3}) total : ${cc.indexDay(2021, 2, 3).toInt()}"
+                )
                 if(scheduleDateList[total][i] != null){
-                    holder.showSchedule(context,scheduleDateList[total][i], i)
+                    holder.showSchedule(scheduleDateList[total][i], i)
                     slist.add(scheduleDateList[total][i]!!)
                 }
             }
             if(stickerDateList[total] != null){
+                sticker = stickerDateList[total]!!
                 holder.showSticker(stickerDateList[total])
             }
 
             // 일요일 빨갛게, 오늘 구분선
-            if(position % 7 == 0) holder.day.setTextColor(ContextCompat.getColor(context, R.color.colorWeekend))
+            if(position % 7 == 0) holder.day.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.colorWeekend
+                )
+            )
             if(isToday(holder)) holder.itemView.relativeLayout.setBackgroundResource(R.drawable.divider_today)
-
 
             // 아이템 클릭 리스너
             holder.itemView.setOnClickListener {
-                val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist,uid)
+                val sadapter = ScheduleListAdapter(context, R.layout.clist_item, slist, uid)
 
                 val dialog = ScheduleDialog.CustomDialogBuilder()
                     .setContext(context)
                     .setuid(uid)
+                    .setSticker(sticker)
                     .setYear(year)
                     .setMonth(month.toString())
                     .setDay(holder.day.text.toString())
                     .setScheduleList(sadapter).create()
 
-                dialog.show(mainActivity.supportFragmentManager,dialog.tag)
+                dialog.show(mainActivity.supportFragmentManager, dialog.tag)
             }
         }
     }

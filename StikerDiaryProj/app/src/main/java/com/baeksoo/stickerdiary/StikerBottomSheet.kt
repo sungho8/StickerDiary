@@ -10,7 +10,7 @@ import com.baeksoo.stickerdiary.Adapter.StikerViewPagerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_stiker.*
 
-class StikerBottomSheet() : BottomSheetDialogFragment() {
+class StikerBottomSheet(val scheduleDialog : ScheduleDialog?) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +32,11 @@ class StikerBottomSheet() : BottomSheetDialogFragment() {
     }
 
     private fun initViewPager(){
-        val Fragment0 = StikerFragment(0,2)
-        val Fragment1 = StikerFragment(0,2)
-        val Fragment2 = StikerFragment(0,2)
-        val Fragment3 = StikerFragment(0,2)
-        val Fragment4 = StikerFragment(0,2)
+        val Fragment0 = StikerFragment(0,2, scheduleDialog)
+        val Fragment1 = StikerFragment(0,2, scheduleDialog)
+        val Fragment2 = StikerFragment(0,2, scheduleDialog)
+        val Fragment3 = StikerFragment(0,2, scheduleDialog)
+        val Fragment4 = StikerFragment(0,2, scheduleDialog)
 
         val adapter = StikerViewPagerAdapter(childFragmentManager)
 
