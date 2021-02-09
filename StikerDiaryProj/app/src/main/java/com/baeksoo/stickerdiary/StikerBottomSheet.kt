@@ -8,6 +8,7 @@ import com.baeksoo.stickerdiary.R
 import com.baeksoo.stickerdiary.StikerFragment
 import com.baeksoo.stickerdiary.Adapter.StikerViewPagerAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.dialog_stiker.*
 
 class StikerBottomSheet(val scheduleDialog : ScheduleDialog?) : BottomSheetDialogFragment() {
@@ -25,18 +26,14 @@ class StikerBottomSheet(val scheduleDialog : ScheduleDialog?) : BottomSheetDialo
         super.onActivityCreated(savedInstanceState)
 
         initViewPager() // 뷰페이저와 어댑터 장착
-
-//        view?.findViewById<Button>(R.id.btnChoose)?.setOnClickListener {
-//            dismiss() //확인 버튼 누르면 다이얼로그 닫기
-//        }
     }
 
     private fun initViewPager(){
         val Fragment0 = StikerFragment(0,2, scheduleDialog)
-        val Fragment1 = StikerFragment(0,2, scheduleDialog)
-        val Fragment2 = StikerFragment(0,2, scheduleDialog)
-        val Fragment3 = StikerFragment(0,2, scheduleDialog)
-        val Fragment4 = StikerFragment(0,2, scheduleDialog)
+        val Fragment1 = StikerFragment(1,0, scheduleDialog)
+        val Fragment2 = StikerFragment(2,0, scheduleDialog)
+        val Fragment3 = StikerFragment(3,0, scheduleDialog)
+        val Fragment4 = StikerFragment(4,0, scheduleDialog)
 
         val adapter = StikerViewPagerAdapter(childFragmentManager)
 
@@ -55,7 +52,7 @@ class StikerBottomSheet(val scheduleDialog : ScheduleDialog?) : BottomSheetDialo
         tabLayout.getTabAt(3)?.setText("사물")
         tabLayout.getTabAt(4)?.setText("동물")
 
-//        main_tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+//        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
 //            override fun onTabReselected(p0: TabLayout.Tab?) {}
 //
 //            override fun onTabUnselected(p0: TabLayout.Tab?) {}

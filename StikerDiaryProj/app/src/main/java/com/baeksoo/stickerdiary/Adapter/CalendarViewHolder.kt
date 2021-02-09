@@ -77,8 +77,8 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
     }
     
     fun titleCut(t : String) : String{
-        if(t.length > 5){
-            return t.substring(0,4) + "..."
+        if(t.length > 7){
+            return t.substring(0,6) + "..."
         }else{
             return t
         }

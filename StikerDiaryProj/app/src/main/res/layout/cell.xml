@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:background="?attr/colorBackground"
@@ -37,6 +38,7 @@
                 android:textSize="9dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorLineTxt"
+                android:layout_marginLeft="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -52,6 +54,7 @@
                 android:textSize="9dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorLineTxt"
+                android:layout_marginLeft="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
