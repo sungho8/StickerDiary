@@ -91,7 +91,6 @@ class ScheduleDialog : DialogFragment(){
             }
         }else{
             if(curStickerData != null){
-
                 if(curStickerData!!.sticker.equals("none"))
                     FirebaseController(uid).RemoveSticker(preStickerData.key)   // 기존 스티커 삭제
                 else

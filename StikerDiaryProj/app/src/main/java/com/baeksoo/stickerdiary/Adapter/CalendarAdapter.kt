@@ -1,8 +1,6 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +14,6 @@ import com.baeksoo.stickerdiary.ScheduleDialog
 import kotlinx.android.synthetic.main.cell.view.*
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 // 생성자에서 리스트 받아옴
 class CalendarAdapter(
@@ -63,17 +60,14 @@ class CalendarAdapter(
             val total = cc.indexDay(year, month, day).toInt()
             var sticker = StickerData("","none", "")
 
+            // 일정
             for(i in 0 until scheduleDateList[total].size){
-                Log.d("whatday", "(${year} , ${month} , ${day}) total : ${total}")
-                Log.d(
-                    "20210203",
-                    "(${2021} , ${2} , ${3}) total : ${cc.indexDay(2021, 2, 3).toInt()}"
-                )
                 if(scheduleDateList[total][i] != null){
                     holder.showSchedule(scheduleDateList[total][i], i)
                     slist.add(scheduleDateList[total][i]!!)
                 }
             }
+            // 스티커
             if(stickerDateList[total] != null){
                 sticker = stickerDateList[total]!!
                 holder.showSticker(stickerDateList[total])
@@ -110,10 +104,6 @@ class CalendarAdapter(
         if(Calendar.getInstance().get(Calendar.YEAR) == year && Calendar.getInstance().get(Calendar.MONTH) + 1 == month &&
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == Integer.parseInt(holder.day.text.toString()))
             return true
-
         return false
     }
-
-
-
 }

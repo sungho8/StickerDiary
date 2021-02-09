@@ -91,13 +91,14 @@ class EditActivity : AppCompatActivity() {
             }
 
             val nextIntent = Intent(this, MainActivity::class.java)
-            nextIntent.putExtra("uid", uid);
+            nextIntent.putExtra("uid", uid)
             nextIntent.putExtra("date", startday)
             startActivity(nextIntent)
         }
 
         btnCancel.setOnClickListener{
             val nextIntent = Intent(this, MainActivity::class.java)
+            nextIntent.putExtra("uid", uid)
             startActivity(nextIntent)
         }
     }

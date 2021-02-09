@@ -1,16 +1,12 @@
 package com.baeksoo.stickerdiary
 
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
@@ -23,11 +19,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.w3c.dom.Attr
 import java.util.*
-import java.util.logging.Level.parse
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -63,12 +58,15 @@ class MainActivity : AppCompatActivity() {
 
         ReadAllSticker()
 
-
-
         ivmOption.setOnClickListener{
             val nextIntent = Intent(this,OptionActivity::class.java)
             nextIntent.putExtra("uid",uid)
             startActivity(nextIntent)
+        }
+
+        // 오늘로 뷰페이저 이동
+        ivmToday.setOnClickListener {
+
         }
     }
 
@@ -157,7 +155,6 @@ class MainActivity : AppCompatActivity() {
             val cc = CalendarCalculator()
             val stotal = (cc.indexDay( syear, smonth, sday)).toInt()
             val etotal = (cc.indexDay( eyear, emonth, eday)).toInt()
-            //Log.d("schedule : " , "${schedule.StartDay}(${stotal}) ~ ${schedule.EndDay}(${etotal}) : [${schedule.Title}]")
             var scheduleLayer = 0
             for(i in stotal .. etotal){
                 var isStart = false
@@ -175,6 +172,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     fun getScheduleLayer(index : Int) : Int{
         var count = 0
         for(i in 0 until scheduleDateList[index].size){
