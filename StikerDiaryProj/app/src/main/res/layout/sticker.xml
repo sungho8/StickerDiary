@@ -7,6 +7,6 @@
         android:id="@+id/ivStickerImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:padding="5dp"
         android:src="@drawable/star"/>
-
 </RelativeLayout>

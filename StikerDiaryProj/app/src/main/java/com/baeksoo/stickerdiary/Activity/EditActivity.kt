@@ -4,16 +4,24 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.baeksoo.stickerdiary.Adapter.StickerViewHolder
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
 import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.sticker.*
 import java.util.*
 
 
 class EditActivity : AppCompatActivity() {
     private var cal = Calendar.getInstance()
 
+    lateinit var preSticker : StickerData
+    lateinit var curSticker : StickerData
     var uid = ""
 
     var syear = cal.get(Calendar.YEAR)
@@ -40,7 +48,8 @@ class EditActivity : AppCompatActivity() {
         initView()
 
         btnSticker.setOnClickListener {
-            val bottomSheet = StikerBottomSheet()
+            val bottomSheet = StikerBottomSheet(null)
+
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 
@@ -56,10 +65,17 @@ class EditActivity : AppCompatActivity() {
         }
 
         btnOK.setOnClickListener{
-            val startday = transformDay(syear,smonth,sday)
-            val endday =transformDay(eyear,emonth,eday)
-            val starttime = transformTime(shour,sminute)
-            val endtime = transformTime(ehour,eminute)
+            // Sticker
+            if(curSticker != null && !curSticker.sticker.equals("none")){
+                curSticker.day = CalendarCalculator().transformDay(syear,smonth,sday)
+                FirebaseController(uid).UploadSticker(curSticker)
+            }
+
+            // Schedule
+            val startday = CalendarCalculator().transformDay(syear,smonth,sday)
+            val endday = CalendarCalculator().transformDay(eyear,emonth,eday)
+            val starttime = CalendarCalculator().transformTime(shour,sminute)
+            val endtime = CalendarCalculator().transformTime(ehour,eminute)
 
             val title = tvEditTitle.text.toString()
             val content = edtMemo.text.toString()
@@ -75,20 +91,22 @@ class EditActivity : AppCompatActivity() {
                 FirebaseController(uid).UploadSchedule(schedule)
             }
 
-
             val nextIntent = Intent(this, MainActivity::class.java)
-            nextIntent.putExtra("uid", uid);
+            nextIntent.putExtra("uid", uid)
             nextIntent.putExtra("date", startday)
             startActivity(nextIntent)
         }
 
         btnCancel.setOnClickListener{
             val nextIntent = Intent(this, MainActivity::class.java)
+            nextIntent.putExtra("uid", uid)
             startActivity(nextIntent)
         }
     }
 
     fun initView(){
+        curSticker = StickerData("","none","")
+
         if(intent.hasExtra("uid")){
             uid = intent.getStringExtra("uid")
         }
@@ -118,7 +136,6 @@ class EditActivity : AppCompatActivity() {
                 ehour = Integer.parseInt(eh)
                 eminute = Integer.parseInt(em)
             }
-
 
             tvEditTitle.setText(schedule.Title)
             ivColor.setColorFilter(resources.getIntArray(R.array.colorArr_Schedule)[schedule.ColorIndex])
@@ -179,27 +196,11 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
-    fun transformDay(y : Int, m : Int, d : Int) : String{
-        var yy = "" + y
-        var mm = "" + m
-        var dd = "" + d
+    fun receiveData(stickerData : StickerData){
+        curSticker = stickerData
 
-        if(mm.length < 2)
-            mm = "0" + mm
-        if(dd.length < 2)
-            dd = "0" + dd
-
-        return yy + mm + dd
-    }
-    fun transformTime(h : Int, m : Int) : String{
-        var hh = "" + h;
-        var mm = "" + m;
-
-        if(hh.length < 2)
-            hh = "0" + hh
-        if(mm.length < 2)
-            mm = "0" + mm
-
-        return hh + mm
+        var pakName = MySharedReferences.ApplicationContext().packageName
+        var imgRes = MySharedReferences.ApplicationContext().resources.getIdentifier(curSticker.sticker, "drawable", pakName)
+        btnSticker.setImageResource(imgRes)
     }
 }

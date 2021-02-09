@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.activity_option.*
+import kotlinx.android.synthetic.main.activity_option.btnCancel
 
 class OptionActivity : AppCompatActivity() {
-    companion object { lateinit var prefs: PreferenceUtil }
+    var uid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,10 +18,14 @@ class OptionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_option)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
 
-        initRadio()
+        init()
     }
 
-    fun initRadio(){
+    fun init(){
+        if(intent.hasExtra("uid")){
+            uid = intent.getStringExtra("uid")
+        }
+
         when(MySharedReferences.prefs.getThemeId()){
             R.style.Theme0 -> radio0.isChecked = true
             R.style.Theme1 -> radio1.isChecked = true
@@ -41,6 +47,14 @@ class OptionActivity : AppCompatActivity() {
                 R.id.radio5 -> MySharedReferences.prefs.setString("Theme","Theme5")
                 R.id.radio6 -> MySharedReferences.prefs.setString("Theme","Theme6")
                 R.id.radio7 -> MySharedReferences.prefs.setString("Theme","Theme7")
+            }
+        }
+
+        btnCancel.setOnClickListener {
+            btnCancel.setOnClickListener{
+                val nextIntent = Intent(this, MainActivity::class.java)
+                nextIntent.putExtra("uid", uid)
+                startActivity(nextIntent)
             }
         }
     }

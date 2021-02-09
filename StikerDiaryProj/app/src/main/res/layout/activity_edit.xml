@@ -27,7 +27,7 @@
         <TextView
             android:text="일정"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
@@ -69,37 +69,16 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/btnSticker"
-                    android:src="@drawable/teststicker2"
+                    android:src="@drawable/none"
                     android:layout_gravity="center"
                     android:layout_width="80dp"
                     android:layout_height="80dp"/>
                 <TextView
                     android:text="스티커"
-                    android:textStyle="bold"
-                    android:textSize="13dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:src="@drawable/image_picture"
-                    android:layout_gravity="center"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"/>
-                <TextView
-                    android:text="이미지"
                     android:textStyle="bold"
                     android:textSize="13dp"
                     android:layout_marginVertical="10dp"

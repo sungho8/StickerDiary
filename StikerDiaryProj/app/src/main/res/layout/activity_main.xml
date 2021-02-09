@@ -11,20 +11,28 @@
     android:id="@+id/titleBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorMain">
+    android:background="#ffffff">
+    <ImageView
+        android:id="@+id/ivmToday"
+        android:src="@drawable/btn_today"
+        android:tint="?attr/colorMain"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:gravity="center"
         android:layout_centerInParent="true">
-        <TextView
+        <ImageView
             android:clickable="true"
             android:id="@+id/pre"
-            android:text="◀"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/btn_left"
+            android:tint="?attr/colorMain"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
         <TextView
             android:id="@+id/monthtxt"
             android:layout_width="wrap_content"
@@ -32,31 +40,27 @@
             android:padding="15dp"
             android:gravity="center"
             android:text="년도 날짜"
-            android:textColor="#ffffff"
+            android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:textSize="25dp"/>
-        <TextView
+            android:textSize="20dp"/>
+        <ImageView
             android:clickable="true"
             android:id="@+id/next"
-            android:text="▶"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/btn_right"
+            android:tint="?attr/colorMain"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/ivmOption"
+        android:src="@drawable/btn_option"
+        android:tint="?attr/colorMain"
+        android:layout_marginRight="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp">
-        <ImageView
-            android:id="@+id/ivmOption"
-            android:src="@drawable/option"
-            android:layout_width="30dp"
-            android:layout_height="30dp"/>
-    </LinearLayout>
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>
 
     <LinearLayout
@@ -73,7 +77,7 @@
             android:gravity="center"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="SUN"
+            android:text="Su"
             android:textSize="15dp"
             android:padding="10dp"/>
         <TextView
@@ -83,7 +87,7 @@
             android:gravity="center"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="MON"
+            android:text="Mo"
             android:textSize="15dp"
             android:padding="10dp"/>
         <TextView
@@ -93,7 +97,7 @@
             android:gravity="center"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="TUE"
+            android:text="Tu"
             android:textSize="15dp"
             android:padding="10dp"/>
         <TextView
@@ -102,17 +106,7 @@
             android:layout_weight="1"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="WED"
-            android:textSize="15dp"
-            android:gravity="center"
-            android:padding="10dp"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="?attr/colorMain"
-            android:textStyle="bold"
-            android:text="THU"
+            android:text="We"
             android:textSize="15dp"
             android:gravity="center"
             android:padding="10dp"/>
@@ -122,7 +116,7 @@
             android:layout_weight="1"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="FRI"
+            android:text="Th"
             android:textSize="15dp"
             android:gravity="center"
             android:padding="10dp"/>
@@ -132,7 +126,17 @@
             android:layout_weight="1"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
-            android:text="SAT"
+            android:text="Fr"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="?attr/colorMain"
+            android:textStyle="bold"
+            android:text="Sa"
             android:textSize="15dp"
             android:gravity="center"
             android:padding="10dp"/>

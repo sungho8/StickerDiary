@@ -9,11 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.baeksoo.stickerdiary.Data.Data
 import com.baeksoo.stickerdiary.Data.Schedule
+import com.baeksoo.stickerdiary.Data.StickerData
+import com.baeksoo.stickerdiary.MySharedReferences
 import com.baeksoo.stickerdiary.R
 
 //생성자 지정 , 상위클래스 view 넘겨줌.  super(calendarView)
 class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarView) {
-
     // 뷰 홀더를 상속 받고나면 생성자에서 상위 홀더에 view 를 전달.
     var count : Int
     val day : TextView
@@ -47,7 +48,15 @@ class CalendarViewHolder(calendarView: View) : RecyclerView.ViewHolder(calendarV
         day.text = list[position].day
     }
 
-    fun showSchedule(context : Context, schedule: Schedule?, i : Int){
+    fun showSticker(stickerData : StickerData?){
+        var pakName = MySharedReferences.ApplicationContext().packageName
+        var resName = stickerData?.sticker
+
+        var imgRes = MySharedReferences.ApplicationContext().resources.getIdentifier(resName, "drawable", pakName)
+        sticker.setImageResource(imgRes)
+    }
+
+    fun showSchedule(schedule: Schedule?, i : Int){
         if (schedule == null)
             return
 

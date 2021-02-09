@@ -6,13 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="50dp"
     tools:context=".OptionActivity">
+    <LinearLayout
+        android:id="@+id/viewBtn"
+        android:background="?attr/colorBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:src="@drawable/btn_cancle"
+            android:background="#ffffff"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:text="설정"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="50dp">
     <TextView
         android:text="테마 변경"
-        android:textStyle="bold"
-        android:textSize="24dp"
-        android:layout_marginBottom="20dp"
+        android:textSize="20dp"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <RadioGroup
@@ -88,10 +118,9 @@
     </RadioGroup>
 
     <TextView
-        android:text="계정"
-        android:textStyle="bold"
-        android:textSize="24dp"
-        android:layout_marginVertical="20dp"
+        android:text="계정 관리"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
@@ -106,5 +135,7 @@
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+</LinearLayout>
+
 
 </LinearLayout>
