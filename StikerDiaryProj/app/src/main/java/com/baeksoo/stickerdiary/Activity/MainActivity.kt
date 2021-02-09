@@ -1,5 +1,6 @@
 package com.baeksoo.stickerdiary
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.w3c.dom.Attr
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val instance = Calendar.getInstance()
     private var year = instance.get(Calendar.YEAR)
     private var month = instance.get(Calendar.MONTH)
+    private var day = instance.get((Calendar.DATE))
 
     private var pageYear = year;
     private var pageMonth = month;
@@ -66,6 +69,25 @@ class MainActivity : AppCompatActivity() {
 
         // 오늘로 뷰페이저 이동
         ivmToday.setOnClickListener {
+            pager.setCurrentItem(view_list.count() / 2 + month)
+        }
+
+        //지정한 년,달로 이동
+        monthtxt.setOnClickListener {
+            var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
+                // i2월 i3일
+                pageYear = i
+                pageMonth = i2
+
+                var distancePage = (year - pageYear) * 12 + (month - pageMonth)
+
+                pager.setCurrentItem(view_list.count() / 2 + month - distancePage)
+
+                monthtxt.text = "${i} 년 ${i2 + 1} 월"
+            }
+
+            var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, pageYear, pageMonth - 1 , 1)
+            datepPicker.show()
 
         }
     }
