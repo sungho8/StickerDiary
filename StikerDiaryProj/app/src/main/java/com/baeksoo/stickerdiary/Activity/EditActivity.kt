@@ -112,16 +112,19 @@ class EditActivity : AppCompatActivity() {
 
         if(intent.hasExtra("Schedule")){
             var schedule = intent.getParcelableExtra<Schedule>("Schedule")
-            val y = schedule.StartDay.substring(0,4)
-            val m = schedule.StartDay.substring(4,6)
-            val d = schedule.StartDay.substring(6,8)
+            val sy = schedule.StartDay.substring(0,4)
+            val sm = schedule.StartDay.substring(4,6)
+            val sd = schedule.StartDay.substring(6,8)
+            val ey = schedule.EndDay.substring(0,4)
+            val em = schedule.EndDay.substring(4,6)
+            val ed = schedule.EndDay.substring(6,8)
 
-            syear = Integer.parseInt(y)
-            eyear = Integer.parseInt(y)
-            smonth = Integer.parseInt(m)
-            emonth = Integer.parseInt(m)
-            sday = Integer.parseInt(d)
-            eday = Integer.parseInt(d)
+            syear = Integer.parseInt(sy)
+            eyear = Integer.parseInt(ey)
+            smonth = Integer.parseInt(sm)
+            emonth = Integer.parseInt(em)
+            sday = Integer.parseInt(sd)
+            eday = Integer.parseInt(ed)
             colorIndex = schedule.ColorIndex
             preScheduleKey = schedule.key
 
@@ -143,8 +146,8 @@ class EditActivity : AppCompatActivity() {
 
         tvStartDate.text = "${smonth}월 ${sday}일"
         tvStartTime.text = "${shour}시 ${sminute}분"
-        tvEndDate.text = "${smonth}월 ${sday}일"
-        tvEndTime.text = "${shour}시 ${sminute}분"
+        tvEndDate.text = "${emonth}월 ${eday}일"
+        tvEndTime.text = "${ehour}시 ${eminute}분"
 
         tvStartDate.setOnClickListener {
             var listener = DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
@@ -177,6 +180,14 @@ class EditActivity : AppCompatActivity() {
                 emonth = i2 + 1
                 eday = i3
                 tvEndDate.text = "${i2 + 1}월 ${i3}일"
+
+                var cc = CalendarCalculator()
+                if(cc.totalDay(eyear,emonth,eday) < cc.totalDay(syear,smonth,sday)){
+                    syear = eyear
+                    smonth = emonth
+                    sday = eday
+                    tvStartDate.text = "${smonth}월 ${eday}일"
+                }
             }
 
             var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, eyear, emonth - 1, eday)
