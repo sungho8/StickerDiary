@@ -49,6 +49,7 @@ class EditActivity : AppCompatActivity() {
 
         btnSticker.setOnClickListener {
             val bottomSheet = StikerBottomSheet(null)
+
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
         }
 
