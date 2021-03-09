@@ -1,8 +1,11 @@
 package com.baeksoo.stickerdiary
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -25,10 +28,28 @@ class LoginActivity  : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(MySharedReferences.prefs.getThemeId())
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);   // 상태바
         setContentView(R.layout.activity_login)
 
         btn_googleSignIn.setOnClickListener {signIn()}
-        btn_guestSignIn.setOnClickListener{guestSignIn()}
+        btn_guestSignIn.setOnClickListener{
+            var builder = AlertDialog.Builder(this)
+            builder.setTitle("게스트 로그인")
+            builder.setMessage("게스트 로그인은 어플 삭제 및 로그아웃시 데이터가 유지되지 않습니다.")
+
+            var listener = object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    when (p1) {
+                        DialogInterface.BUTTON_POSITIVE ->
+                            guestSignIn()
+                    }
+                }
+            }
+            builder.setPositiveButton("확인", listener)
+            builder.setNegativeButton("취소", listener)
+            builder.show()
+        }
 
         //Google 로그인 옵션 구성. requestIdToken 및 Email 요청
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -48,7 +69,12 @@ class LoginActivity  : AppCompatActivity(){
     public override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
+
         if(account!==null){ // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
+            toMainActivity(firebaseAuth.currentUser)
+        }
+
+        if(firebaseAuth.currentUser != null){
             toMainActivity(firebaseAuth.currentUser)
         }
     } //onStart End
@@ -93,8 +119,6 @@ class LoginActivity  : AppCompatActivity(){
         if(user !=null) {
             // user id -> MainActivity
             val intent = Intent(this, MainActivity::class.java)
-
-            Log.d("Uid is",user.uid)
             intent.putExtra("uid", user.uid)
             startActivity(intent)
             finish()
@@ -102,8 +126,21 @@ class LoginActivity  : AppCompatActivity(){
     } // toMainActivity End
 
     private fun guestSignIn(){
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        firebaseAuth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("tag tag", "signInAnonymously:success")
+                    val user = firebaseAuth.currentUser
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("uid",user!!.uid)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("tag tag", "signInAnonymously:failure", task.exception)
+                }
+            }
     }
 
     // signIn
@@ -113,20 +150,28 @@ class LoginActivity  : AppCompatActivity(){
     }
     // signIn End
 
-    private fun signOut() { // 로그아웃
-        // Firebase sign out
-        firebaseAuth.signOut()
+    // 앱을 종료하시겟습니까?
+    override fun onBackPressed() {
+        var builder = AlertDialog.Builder(this)
+        builder.setTitle("종료")
+        builder.setMessage("종료하시겠습니까?")
 
-        // Google sign out
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            //updateUI(null)
+        var listener = object : DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                when (p1) {
+                    DialogInterface.BUTTON_POSITIVE ->
+                        quit()
+                }
+            }
         }
+        builder.setPositiveButton("확인", listener)
+        builder.setNegativeButton("취소", listener)
+        builder.show()
     }
 
-    private fun revokeAccess() { //회원탈퇴
-        // Firebase sign out
-        firebaseAuth.signOut()
-        googleSignInClient.revokeAccess().addOnCompleteListener(this) {
-        }
+    fun quit(){
+        moveTaskToBack(true);
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 }

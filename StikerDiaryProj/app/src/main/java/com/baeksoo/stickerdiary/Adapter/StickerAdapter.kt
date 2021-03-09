@@ -1,6 +1,7 @@
 package com.baeksoo.stickerdiary.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -25,6 +26,7 @@ class StickerAdapter(val list: ArrayList<StickerData>) : RecyclerView.Adapter<St
 
     override fun onBindViewHolder(holder : StickerViewHolder, position: Int) {
         // 홀더에 정의된 함수로 뷰 그리기
+
         holder.onBindView(position, list)
         holder.itemView.requestLayout()
         holder.itemView.setOnClickListener{

@@ -25,7 +25,7 @@ class ScheduleListAdapter(context: Context, resource: Int, item: ArrayList<Sched
     private val mResource = resource
 
     //리스트에 들어갈 View를 지정해줌.
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         lateinit var viewHolder : ViewHolder
         var view = convertView
         if (view == null){

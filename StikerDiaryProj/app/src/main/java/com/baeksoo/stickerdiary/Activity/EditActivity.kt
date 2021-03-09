@@ -4,16 +4,12 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.baeksoo.stickerdiary.Adapter.StickerViewHolder
 import com.baeksoo.stickerdiary.Data.Schedule
 import com.baeksoo.stickerdiary.Data.StickerData
 import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.sticker.*
 import java.util.*
 
 
@@ -157,6 +153,11 @@ class EditActivity : AppCompatActivity() {
                 smonth = i2 + 1
                 sday = i3
                 tvStartDate.text = "${i2 + 1}월 ${i3}일"
+
+                if(syear >= cal.get(Calendar.YEAR) + 10 || syear < cal.get(Calendar.YEAR) - 10){
+                    syear = cal.get(Calendar.YEAR)
+                    Toast.makeText(this@EditActivity , "범위를 벗어난 일정입니다 (10년).",Toast.LENGTH_SHORT).show()
+                }
             }
 
             var datepPicker = DatePickerDialog(this,DatePickerDialog.THEME_HOLO_LIGHT, listener, syear, smonth - 1, sday)
@@ -188,6 +189,11 @@ class EditActivity : AppCompatActivity() {
                     smonth = emonth
                     sday = eday
                     tvStartDate.text = "${smonth}월 ${eday}일"
+                }
+
+                if(eyear >= cal.get(Calendar.YEAR) + 10 || eyear < cal.get(Calendar.YEAR) - 10){
+                    eyear = cal.get(Calendar.YEAR)
+                    Toast.makeText(this@EditActivity , "범위를 벗어난 일정입니다 (10년).",Toast.LENGTH_SHORT).show()
                 }
             }
 

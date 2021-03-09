@@ -1,13 +1,22 @@
 package com.baeksoo.stickerdiary
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.PagerAdapter
@@ -20,14 +29,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_edit.*
 import kotlinx.android.synthetic.main.calendar.view.*
 import kotlinx.android.synthetic.main.activity_main.*
-import org.w3c.dom.Attr
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var progressDialog : AppCompatDialog
+
     private val dateCalculator = CalendarCalculator()
 
     private var month_list = ArrayList<String>()
@@ -92,9 +101,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 앱을 종료하시겟습니까?
+    override fun onBackPressed() {
+        var builder = AlertDialog.Builder(this)
+        builder.setTitle("종료")
+        builder.setMessage("종료하시겠습니까?")
+
+        var listener = object : DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                when (p1) {
+                    DialogInterface.BUTTON_POSITIVE ->
+                        quit()
+                }
+            }
+        }
+        builder.setPositiveButton("확인", listener)
+        builder.setNegativeButton("취소", listener)
+        builder.show()
+    }
+
     fun ReadAllSticker(){
         val myRef = Firebase.database.getReference(uid).child("Sticker")
 
+        progressON()
         myRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(data : DataSnapshot) {
                 for(snapshot in data.children){
@@ -129,6 +158,7 @@ class MainActivity : AppCompatActivity() {
                 arrangeSchedule()       // 일정 정렬
                 arrangeSticker()        // 스티커 정렬
                 makeCalendar()          // calandar adapter 생성
+                progressOFF()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -247,8 +277,8 @@ class MainActivity : AppCompatActivity() {
             // 구분선
             val dividerItemDecoration = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.VERTICAL)
             val dividerItemDecoration2 = DividerItemDecoration(currentView.recyclerView.context, LinearLayoutManager.HORIZONTAL)
-            dividerItemDecoration.setDrawable(getDrawable(R.drawable.divider))
-            dividerItemDecoration2.setDrawable(getDrawable(R.drawable.divider))
+            dividerItemDecoration.setDrawable(ContextCompat.getDrawable(applicationContext,R.drawable.divider)!!)
+            dividerItemDecoration2.setDrawable(ContextCompat.getDrawable(applicationContext,R.drawable.divider)!!)
             currentView.recyclerView.addItemDecoration(dividerItemDecoration)
             currentView.recyclerView.addItemDecoration(dividerItemDecoration2)
 
@@ -293,6 +323,35 @@ class MainActivity : AppCompatActivity() {
         next.setOnClickListener(View.OnClickListener {
             pager.setCurrentItem(++pager.currentItem,true);
         })
+    }
+
+    fun progressON(){
+        progressDialog = AppCompatDialog(this)
+        progressDialog.setCancelable(false)
+        progressDialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        progressDialog.getWindow()?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        progressDialog.setContentView(R.layout.dialog_loading)
+        progressDialog.show()
+        var img_loading_framge = progressDialog.findViewById<ImageView>(R.id.iv_frame_loading)
+        var frameAnimation = img_loading_framge?.getBackground() as AnimationDrawable
+
+        img_loading_framge?.post(object : Runnable{
+            override fun run() {
+                frameAnimation.start()
+            }
+        })
+    }
+
+    fun progressOFF(){
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss()
+        }
+    }
+
+    fun quit(){
+        moveTaskToBack(true);
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     inner class CustomPagerAdapter : PagerAdapter() {

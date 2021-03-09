@@ -21,7 +21,7 @@ class FirebaseController(var userid : String){
     }
 
     // 스티커 데이터 수정
-    fun UpdateSticker(key : String,sticker : StickerData){
+    fun UpdateSticker(key : String, sticker : StickerData){
         RemoveSticker(key)
         UploadSticker(sticker)
     }

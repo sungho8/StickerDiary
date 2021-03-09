@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:772219846527:android:b05ab1b3639d8479b8644a",
         "android_client_info": {
-          "package_name": "com.example.stickerdiary"
+          "package_name": "com.baeksoo.stickerdiary"
         }
       },
       "oauth_client": [

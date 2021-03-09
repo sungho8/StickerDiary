@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StickerDiary</string>
+    <string name="app_name">스티커 다이어리</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

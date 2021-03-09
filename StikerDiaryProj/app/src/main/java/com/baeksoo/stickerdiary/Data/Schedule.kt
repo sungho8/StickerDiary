@@ -15,14 +15,14 @@ class Schedule(): Parcelable {
     var Content: String = ""
 
     constructor(parcel: Parcel) : this() {
-        key = parcel.readString()
+        key = parcel.readString().toString()
         ColorIndex = parcel.readInt()
-        StartDay = parcel.readString()
-        EndDay = parcel.readString()
-        StartTime = parcel.readString()
-        EndTime = parcel.readString()
-        Title = parcel.readString()
-        Content = parcel.readString()
+        StartDay = parcel.readString().toString()
+        EndDay = parcel.readString().toString()
+        StartTime = parcel.readString().toString()
+        EndTime = parcel.readString().toString()
+        Title = parcel.readString().toString()
+        Content = parcel.readString().toString()
     }
 
     constructor(key : String ,ColorIndex : Int, StartDay : String, EndDay : String, StartTime : String, EndTime : String,

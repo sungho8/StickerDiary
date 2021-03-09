@@ -8,9 +8,9 @@ class StickerData () : Parcelable{
     var sticker : String = ""
     var day : String = ""
     constructor(parcel: Parcel) : this() {
-        key = parcel.readString()
-        sticker = parcel.readString()
-        day = parcel.readString()
+        key = parcel.readString().toString()
+        sticker = parcel.readString().toString()
+        day = parcel.readString().toString()
     }
 
     constructor(key : String, sticker : String, day : String) : this() {

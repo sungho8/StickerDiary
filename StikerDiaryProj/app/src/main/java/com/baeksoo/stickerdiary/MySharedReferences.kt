@@ -22,4 +22,6 @@ class MySharedReferences : Application(){
         prefs = PreferenceUtil(applicationContext)
         super.onCreate()
     }
+
+
 }

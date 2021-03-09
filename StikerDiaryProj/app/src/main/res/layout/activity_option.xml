@@ -124,12 +124,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
+        android:id="@+id/btnLogout"
         android:text="로그 아웃"
         android:gravity="left|center_vertical"
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
+        android:id="@+id/btnWithdrawal"
         android:text="계정 탈퇴"
         android:gravity="left|center_vertical"
         android:background="#ffffff"

@@ -41,7 +41,6 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:gravity="center"
-            android:text="년도 날짜"
             android:textColor="?attr/colorMain"
             android:textStyle="bold"
             android:textSize="20dp"/>

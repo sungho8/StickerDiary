@@ -1,15 +1,22 @@
 package com.baeksoo.stickerdiary
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
-import kotlinx.android.synthetic.main.activity_edit.*
+import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_option.*
 import kotlinx.android.synthetic.main.activity_option.btnCancel
 
 class OptionActivity : AppCompatActivity() {
+    lateinit var firebaseAuth : FirebaseAuth
+    lateinit var googleSignInClient : GoogleSignInClient
+
     var uid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +29,14 @@ class OptionActivity : AppCompatActivity() {
     }
 
     fun init(){
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         if(intent.hasExtra("uid")){
             uid = intent.getStringExtra("uid")
         }
@@ -50,12 +65,46 @@ class OptionActivity : AppCompatActivity() {
             }
         }
 
-        btnCancel.setOnClickListener {
-            btnCancel.setOnClickListener{
-                val nextIntent = Intent(this, MainActivity::class.java)
-                nextIntent.putExtra("uid", uid)
-                startActivity(nextIntent)
+        btnCancel.setOnClickListener{
+            val nextIntent = Intent(this, MainActivity::class.java)
+            nextIntent.putExtra("uid", uid)
+            startActivity(nextIntent)
+        }
+
+        btnLogout.setOnClickListener {
+            var builder = AlertDialog.Builder(this)
+            builder.setTitle("로그 아웃")
+            builder.setMessage("구글계정만 일정이 유지됩니다")
+
+            var listener = object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    when (p1) {
+                        DialogInterface.BUTTON_POSITIVE ->
+                            signOut()
+                    }
+                }
             }
+            builder.setPositiveButton("확인", listener)
+            builder.setNegativeButton("취소", listener)
+            builder.show()
+        }
+
+        btnWithdrawal.setOnClickListener {
+            var builder = AlertDialog.Builder(this)
+            builder.setTitle("로그 아웃")
+            builder.setMessage("구글계정만 일정이 유지됩니다")
+
+            var listener = object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    when (p1) {
+                        DialogInterface.BUTTON_POSITIVE ->
+                            revokeAccess()
+                    }
+                }
+            }
+            builder.setPositiveButton("확인", listener)
+            builder.setNegativeButton("취소", listener)
+            builder.show()
         }
     }
 
@@ -63,5 +112,26 @@ class OptionActivity : AppCompatActivity() {
         val nextIntent = Intent(this, MainActivity::class.java)
         nextIntent.putExtra("uid",intent.getStringExtra("uid"))
         startActivity(nextIntent)
+    }
+
+    private fun signOut() { // 로그아웃
+        // Firebase sign out
+        firebaseAuth.signOut()
+
+        // Google sign out
+        googleSignInClient.signOut().addOnCompleteListener(this) {
+            val nextIntent = Intent(this, LoginActivity::class.java)
+            startActivity(nextIntent)
+        }
+    }
+
+    private fun revokeAccess() { //회원탈퇴 ? 왜안되징
+        // Firebase sign out
+        firebaseAuth.signOut()
+
+        googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+            val nextIntent = Intent(this, LoginActivity::class.java)
+            startActivity(nextIntent)
+        }
     }
 }
